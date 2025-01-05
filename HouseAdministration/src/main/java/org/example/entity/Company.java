@@ -13,4 +13,32 @@ public class Company extends BaseEntity {
     private LocalDate foundationDate;
     @OneToMany(mappedBy = "company")
     private Set<Employee> employees;
+
+    public Company() {
+    }
+
+    public Company(String name, LocalDate foundationDate, Set<Employee> employees) {
+        this.name = name;
+        this.foundationDate = foundationDate;
+        this.employees = employees;
+    }
+
+    public Company(long id, String name, LocalDate foundationDate, Set<Employee> employees) {
+        super(id);
+        this.name = name;
+        this.foundationDate = foundationDate;
+        this.employees = employees;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getFoundationDate() {
+        return foundationDate;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
 }

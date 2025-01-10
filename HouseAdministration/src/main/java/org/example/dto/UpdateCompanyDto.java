@@ -3,23 +3,23 @@ package org.example.dto;
 import org.example.entity.Employee;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
-public class CreateCompanyDto {
+public class UpdateCompanyDto {
+    private final long id;
     private final String name;
     private final LocalDate foundationDate;
-    private Set<Employee> employees;
+    private final Set<Employee> employees;
 
-    public CreateCompanyDto(String name, Set<Employee> employees) {
-        this(name);
+    public UpdateCompanyDto(long id, String name, LocalDate foundationDate, Set<Employee> employees) {
+        this.id = id;
+        this.name = name;
+        this.foundationDate = foundationDate;
         this.employees = employees;
     }
 
-    public CreateCompanyDto(String name) {
-        this.name = name;
-        this.foundationDate = LocalDate.now();
-        this.employees = new HashSet<>();
+    public long getId() {
+        return id;
     }
 
     public String getName() {

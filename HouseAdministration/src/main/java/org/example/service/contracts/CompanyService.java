@@ -1,8 +1,8 @@
 package org.example.service.contracts;
 
-import org.example.dto.CompanyDto;
-import org.example.dto.CreateCompanyDto;
-import org.example.dto.UpdateCompanyDto;
+import org.example.dto.Company.CompanyDto;
+import org.example.dto.Company.CreateCompanyDto;
+import org.example.dto.Company.UpdateCompanyDto;
 import org.example.entity.Employee;
 
 import java.util.Set;

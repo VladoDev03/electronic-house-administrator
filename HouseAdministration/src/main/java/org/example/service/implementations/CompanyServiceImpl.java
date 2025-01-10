@@ -1,9 +1,9 @@
 package org.example.service.implementations;
 
 import org.example.dao.CompanyDao;
-import org.example.dto.CompanyDto;
-import org.example.dto.CreateCompanyDto;
-import org.example.dto.UpdateCompanyDto;
+import org.example.dto.Company.CompanyDto;
+import org.example.dto.Company.CreateCompanyDto;
+import org.example.dto.Company.UpdateCompanyDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.service.contracts.CompanyService;

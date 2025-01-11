@@ -15,4 +15,7 @@ DELETE FROM resident;
 SET SQL_SAFE_UPDATES = 1;
 
 SELECT e.id AS employee_id, b.id AS building_id FROM building AS b
-INNER JOIN employee AS e ON e.id = b.responsibleEmployee_id
+INNER JOIN employee AS e ON e.id = b.responsibleEmployee_id;
+
+SELECT e.id AS employee_id, c.id AS company_id FROM company AS c
+INNER JOIN employee AS e ON e.company_id = c.id;

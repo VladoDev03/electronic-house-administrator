@@ -1,11 +1,15 @@
 package org.example.service.implementations;
 
+import org.example.dao.CompanyDao;
 import org.example.dao.EmployeeDao;
 import org.example.dto.Employee.CreateEmployeeDto;
 import org.example.dto.Employee.EmployeeDto;
 import org.example.dto.Employee.UpdateEmployeeDto;
+import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.service.contracts.EmployeeService;
+
+import java.util.HashSet;
 
 public class EmployeeServiceImpl implements EmployeeService {
     @Override
@@ -66,5 +70,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
 
         EmployeeDao.updateEmployee(employee);
+    }
+
+    @Override
+    public void hireEmployee(long employeeId, long companyId) {
+        Employee employee = EmployeeDao.getEmployeeById(employeeId);
+        Company company = CompanyDao.getCompanyById(companyId);
+
+        UpdateEmployeeDto updatedEmployee = new UpdateEmployeeDto(
+                employee.getId(),
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getAge(),
+                employee.getAssignedBuildings(),
+                company
+        );
+
+        updateEmployee(updatedEmployee);
     }
 }

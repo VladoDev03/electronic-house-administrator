@@ -1,10 +1,12 @@
 package org.example.service.implementations;
 
 import org.example.dao.ApartmentDao;
+import org.example.dao.BuildingDao;
 import org.example.dto.Apartment.ApartmentDto;
 import org.example.dto.Apartment.CreateApartmentDto;
 import org.example.dto.Apartment.UpdateApartmentDto;
 import org.example.entity.Apartment;
+import org.example.entity.Building;
 import org.example.service.contracts.ApartmentService;
 
 public class ApartmentServiceImpl implements ApartmentService {
@@ -74,5 +76,24 @@ public class ApartmentServiceImpl implements ApartmentService {
         );
 
         ApartmentDao.updateApartment(apartment);
+    }
+
+    @Override
+    public void addApartmentToBuilding(long apartmentId, long buildingId) {
+        Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
+        Building building = BuildingDao.getBuildingById(buildingId);
+
+        UpdateApartmentDto apartmentDto = new UpdateApartmentDto(
+                apartment.getId(),
+                apartment.getFloor(),
+                apartment.getApartmentNumber(),
+                apartment.getArea(),
+                apartment.getHasPet(),
+                building,
+                apartment.getResidents(),
+                apartment.getOwners()
+        );
+
+        updateApartment(apartmentDto);
     }
 }

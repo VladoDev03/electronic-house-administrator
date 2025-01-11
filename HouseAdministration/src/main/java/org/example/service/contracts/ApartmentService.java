@@ -9,4 +9,5 @@ public interface ApartmentService {
     ApartmentDto createApartment(CreateApartmentDto apartmentDto);
     void deleteApartment(long apartmentId);
     void updateApartment(UpdateApartmentDto apartmentDto);
+    void addApartmentToBuilding(long apartmentId, long buildingId);
 }

@@ -9,4 +9,5 @@ public interface BuildingService {
     void deleteBuilding(long buildingId);
     BuildingDto getBuildingById(long buildingId);
     void updateBuilding(UpdateBuildingDto buildingToUpdate);
+    void assignBuildingToEmployee(long employeeId, long buildingId);
 }

@@ -1,11 +1,16 @@
 package org.example.service.implementations;
 
 import org.example.dao.BuildingDao;
+import org.example.dao.EmployeeDao;
 import org.example.dto.Building.BuildingDto;
 import org.example.dto.Building.CreateBuildingDto;
 import org.example.dto.Building.UpdateBuildingDto;
 import org.example.entity.Building;
+import org.example.entity.Employee;
 import org.example.service.contracts.BuildingService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class BuildingServiceImpl implements BuildingService {
     @Override
@@ -36,5 +41,22 @@ public class BuildingServiceImpl implements BuildingService {
     public void updateBuilding(UpdateBuildingDto buildingToUpdate) {
         Building building = new Building(buildingToUpdate.getId(), buildingToUpdate.getAddress(), buildingToUpdate.getFloors(), buildingToUpdate.getArea(), buildingToUpdate.getApartments(), buildingToUpdate.getResponsibleEmployee());
         BuildingDao.updateBuilding(building);
+    }
+
+    @Override
+    public void assignBuildingToEmployee(long employeeId, long buildingId) {
+        Employee employee = EmployeeDao.getEmployeeById(employeeId);
+        Building building = BuildingDao.getBuildingById(buildingId);
+
+        UpdateBuildingDto updatedBuilding = new UpdateBuildingDto(
+                building.getId(),
+                building.getAddress(),
+                building.getFloors(),
+                building.getArea(),
+                new HashSet<>(),
+                employee
+        );
+
+        updateBuilding(updatedBuilding);
     }
 }

@@ -1,6 +1,8 @@
 package org.example.dao;
 
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Building;
+import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,7 +13,7 @@ public class EmployeeDao {
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            employee = (Employee) session.get(Employee.class, id);
+            employee = session.get(Employee.class, id);
             transaction.commit();
         }
 
@@ -40,5 +42,34 @@ public class EmployeeDao {
             session.delete(employee);
             transaction.commit();
         }
+    }
+
+    public static void assignBuilding(Employee employee, Building building) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employee.getAssignedBuildings().add(building);
+            session.saveOrUpdate(employee);
+            transaction.commit();
+        }
+    }
+
+    public static Employee getEmployeeWithBuildings(long employeeId) {
+        Employee employee;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            employee = session.createQuery(
+                            "select e from Employee e" +
+                                    " join fetch e.assignedBuildings" +
+                                    " where e.id = :id",
+                            Employee.class)
+                    .setParameter("id", employeeId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return employee;
     }
 }

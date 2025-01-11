@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class Payment extends BaseEntity {
     private double amount;
     private LocalDate paymentDate;
+
     @OneToOne(mappedBy = "company")
     private Company company;
 }

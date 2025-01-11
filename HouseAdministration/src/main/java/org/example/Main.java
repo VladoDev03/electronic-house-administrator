@@ -29,10 +29,10 @@ public class Main {
         CompanyService companyService = new CompanyServiceImpl();
         ApartmentService apartmentService = new ApartmentServiceImpl();
 
-        EmployeeDto employeeDto = employeeService.createEmployee(new CreateEmployeeDto("asd", "asd", 1, new HashSet<>(), null));
-        CompanyDto companyDto = companyService.createCompany(new CreateCompanyDto("asd", new HashSet<>()));
-        BuildingDto buildingDto = buildingService.createBuilding(new CreateBuildingDto("asd", 1, 1, new HashSet<>(), null));
-        ApartmentDto apartmentDto = apartmentService.createApartment(new CreateApartmentDto(1, 1, 1, true, null, new HashSet<>(), new HashSet<>()));
+        EmployeeDto employeeDto = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
+        CompanyDto companyDto = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
+        BuildingDto buildingDto = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower", 10, 100, new HashSet<>(), null));
+        ApartmentDto apartmentDto = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>()));
 
         buildingService.assignBuildingToEmployee(employeeDto.getId(), buildingDto.getId());
         employeeService.hireEmployee(employeeDto.getId(), companyDto.getId());

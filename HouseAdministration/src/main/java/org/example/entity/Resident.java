@@ -8,8 +8,10 @@ import java.util.Set;
 @Entity
 public class Resident extends Person {
     private boolean usesElevator;
+
     @ManyToMany(mappedBy = "owners")
     private Set<Apartment> ownedApartments;
+
     @ManyToOne
     private Apartment apartment;
 

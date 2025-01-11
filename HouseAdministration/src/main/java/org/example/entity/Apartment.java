@@ -6,7 +6,10 @@ import java.util.Set;
 @Entity
 public class Apartment extends BaseEntity {
     private int floor;
+
+    @Column(name = "apartment_number")
     private int apartmentNumber;
+
     private int area;
     private boolean hasPet;
 

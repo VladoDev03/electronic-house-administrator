@@ -23,4 +23,56 @@ public class Apartment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "resident_id")
     )
     private Set<Resident> owners;
+
+    public Apartment() {
+    }
+
+    public Apartment(int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners) {
+        this.floor = floor;
+        this.apartmentNumber = apartmentNumber;
+        this.area = area;
+        this.hasPet = hasPet;
+        this.building = building;
+        this.residents = residents;
+        this.owners = owners;
+    }
+
+    public Apartment(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners) {
+        super(id);
+        this.floor = floor;
+        this.apartmentNumber = apartmentNumber;
+        this.area = area;
+        this.hasPet = hasPet;
+        this.building = building;
+        this.residents = residents;
+        this.owners = owners;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public boolean getHasPet() {
+        return hasPet;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public Set<Resident> getResidents() {
+        return residents;
+    }
+
+    public Set<Resident> getOwners() {
+        return owners;
+    }
 }

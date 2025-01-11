@@ -1,15 +1,21 @@
 package org.example;
 
 import org.example.configuration.SessionFactoryUtil;
+import org.example.dto.Apartment.ApartmentDto;
+import org.example.dto.Apartment.CreateApartmentDto;
+import org.example.dto.Apartment.UpdateApartmentDto;
 import org.example.dto.Building.BuildingDto;
 import org.example.dto.Building.CreateBuildingDto;
 import org.example.dto.Company.CompanyDto;
 import org.example.dto.Company.CreateCompanyDto;
 import org.example.dto.Employee.CreateEmployeeDto;
 import org.example.dto.Employee.EmployeeDto;
+import org.example.entity.Apartment;
+import org.example.service.contracts.ApartmentService;
 import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.CompanyService;
 import org.example.service.contracts.EmployeeService;
+import org.example.service.implementations.ApartmentServiceImpl;
 import org.example.service.implementations.BuildingServiceImpl;
 import org.example.service.implementations.CompanyServiceImpl;
 import org.example.service.implementations.EmployeeServiceImpl;

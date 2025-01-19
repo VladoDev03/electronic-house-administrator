@@ -7,16 +7,16 @@ import javax.persistence.OneToOne;
 @Entity
 public class Service extends BaseEntity {
     @Column(name = "price_area")
-    private boolean priceArea;
+    private double priceArea;
 
     @Column(name = "price_resident")
-    private boolean priceResident;
+    private double priceResident;
 
     @Column(name = "price_animal")
-    private boolean priceAnimal;
+    private double priceAnimal;
 
     @Column(name = "price_elevator")
-    private boolean priceElevator;
+    private double priceElevator;
 
     @OneToOne
     private Building building;
@@ -24,7 +24,7 @@ public class Service extends BaseEntity {
     public Service() {
     }
 
-    public Service(boolean priceArea, boolean priceResident, boolean priceAnimal, boolean priceElevator, Building building) {
+    public Service(double priceArea, double priceResident, double priceAnimal, double priceElevator, Building building) {
         this.priceArea = priceArea;
         this.priceResident = priceResident;
         this.priceAnimal = priceAnimal;
@@ -32,7 +32,7 @@ public class Service extends BaseEntity {
         this.building = building;
     }
 
-    public Service(long id, boolean priceArea, boolean priceResident, boolean priceAnimal, boolean priceElevator, Building building) {
+    public Service(long id, double priceArea, double priceResident, double priceAnimal, double priceElevator, Building building) {
         super(id);
         this.priceArea = priceArea;
         this.priceResident = priceResident;
@@ -41,19 +41,19 @@ public class Service extends BaseEntity {
         this.building = building;
     }
 
-    public boolean isPriceArea() {
+    public double getPriceArea() {
         return priceArea;
     }
 
-    public boolean isPriceResident() {
+    public double getPriceResident() {
         return priceResident;
     }
 
-    public boolean isPriceAnimal() {
+    public double getPriceAnimal() {
         return priceAnimal;
     }
 
-    public boolean isPriceElevator() {
+    public double getPriceElevator() {
         return priceElevator;
     }
 

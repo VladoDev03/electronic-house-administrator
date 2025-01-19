@@ -9,8 +9,6 @@ import org.example.entity.Building;
 import org.example.entity.Employee;
 import org.example.service.contracts.BuildingService;
 
-import java.util.HashSet;
-
 public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDto createBuilding(CreateBuildingDto buildingDto) {
@@ -86,7 +84,7 @@ public class BuildingServiceImpl implements BuildingService {
                 building.getAddress(),
                 building.getFloors(),
                 building.getArea(),
-                new HashSet<>(),
+                building.getApartments(),
                 employee,
                 building.getService()
         );

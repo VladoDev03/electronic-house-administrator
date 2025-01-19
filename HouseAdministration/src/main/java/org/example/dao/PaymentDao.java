@@ -1,43 +1,43 @@
 package org.example.dao;
 
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.Service;
+import org.example.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class ServiceDao {
-    public static void createService(Service service) {
+public class PaymentDao {
+    public static void createPayment(Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(service);
+            session.save(payment);
             transaction.commit();
         }
     }
 
-    public static Service getServiceById(long id) {
-        Service service;
+    public static Payment getPaymentById(long id) {
+        Payment payment;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            service = session.get(Service.class, id);
+            payment = session.get(Payment.class, id);
             transaction.commit();
         }
 
-        return service;
+        return payment;
     }
 
-    public static void updateService(Service service) {
+    public static void updatePayment(Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(service);
+            session.saveOrUpdate(payment);
             transaction.commit();
         }
     }
 
-    public static void deleteService(Service service) {
+    public static void deletePayment(Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(service);
+            session.delete(payment);
             transaction.commit();
         }
     }

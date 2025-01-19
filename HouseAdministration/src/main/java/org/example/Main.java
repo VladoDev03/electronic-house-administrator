@@ -11,8 +11,11 @@ import org.example.dto.Employee.CreateEmployeeDto;
 import org.example.dto.Employee.EmployeeDto;
 import org.example.dto.Payment.CreatePaymentDto;
 import org.example.dto.Payment.PaymentDto;
+import org.example.dto.Resident.CreateResidentDto;
+import org.example.dto.Resident.ResidentDto;
 import org.example.dto.Service.CreateServiceDto;
 import org.example.dto.Service.ServiceDto;
+import org.example.entity.Apartment;
 import org.example.service.contracts.*;
 import org.example.service.implementations.*;
 
@@ -28,6 +31,7 @@ public class Main {
         ApartmentService apartmentService = new ApartmentServiceImpl();
         ServiceService serviceService = new ServiceServiceImpl();
         PaymentService paymentService = new PaymentServiceImpl();
+        ResidentService residentService = new ResidentServiceImpl();
 
         EmployeeDto employeeDto = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
         CompanyDto companyDto = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
@@ -35,12 +39,17 @@ public class Main {
         ApartmentDto apartmentDto = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>(), null));
         ServiceDto serviceDto = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, null));
         PaymentDto paymentDto = paymentService.createPayment(new CreatePaymentDto(1500, null));
+        ResidentDto residentDto1 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
+        ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));
+        ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 32, true, new HashSet<>(), null));
 
         buildingService.assignBuildingToEmployee(employeeDto.getId(), buildingDto.getId());
         employeeService.hireEmployee(employeeDto.getId(), companyDto.getId());
         apartmentService.addApartmentToBuilding(apartmentDto.getId(), buildingDto.getId());
-//        buildingService.addApartmentToBuilding(apartmentDto.getId(), buildingDto.getId());
         serviceService.setServiceToBuilding(serviceDto.getId(), buildingDto.getId());
         paymentService.addPaymentToApartment(paymentDto.getId(), apartmentDto.getId());
+        residentService.addResidentToApartment(residentDto1.getId(), apartmentDto.getId());
+        residentService.addResidentToApartment(residentDto2.getId(), apartmentDto.getId());
+        residentService.addResidentToApartment(residentDto3.getId(), apartmentDto.getId());
     }
 }

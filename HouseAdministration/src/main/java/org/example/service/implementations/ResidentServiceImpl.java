@@ -1,5 +1,6 @@
 package org.example.service.implementations;
 
+import org.example.dao.ApartmentDao;
 import org.example.dao.ResidentDao;
 import org.example.dto.Resident.CreateResidentDto;
 import org.example.dto.Resident.ResidentDto;
@@ -79,5 +80,23 @@ public class ResidentServiceImpl implements ResidentService {
     public Set<Apartment> getResidentOwnedApartments(long residentId) {
         Set<Apartment> result = ResidentDao.getResidentOwnedApartments(residentId);
         return result;
+    }
+
+    @Override
+    public void addResidentToApartment(long residentId, long apartmentId) {
+        Resident resident = ResidentDao.getResidentById(residentId);
+        Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
+
+        UpdateResidentDto residentDto = new UpdateResidentDto(
+                resident.getId(),
+                resident.getFirstName(),
+                resident.getLastName(),
+                resident.getAge(),
+                resident.isUsesElevator(),
+                resident.getOwnedApartments(),
+                apartment
+        );
+
+        updateResident(residentDto);
     }
 }

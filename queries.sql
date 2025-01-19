@@ -29,7 +29,7 @@ SELECT
     c.id AS company_id,
     a.id AS apartment_id
 FROM building AS b
-INNER JOIN employee AS e ON e.id = b.responsibleEmployee_id
+INNER JOIN employee AS e ON e.id = b.responsible_employee_id
 INNER JOIN company AS c ON e.company_id = c.id
 INNER JOIN apartment AS a ON a.building_id = b.id;
 

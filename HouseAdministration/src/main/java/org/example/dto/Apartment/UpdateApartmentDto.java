@@ -1,6 +1,7 @@
 package org.example.dto.Apartment;
 
 import org.example.entity.Building;
+import org.example.entity.Payment;
 import org.example.entity.Resident;
 
 import java.util.Set;
@@ -14,8 +15,9 @@ public class UpdateApartmentDto {
     private final Building building;
     private final Set<Resident> residents;
     private final Set<Resident> owners;
+    private final Set<Payment> payments;
 
-    public UpdateApartmentDto(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners) {
+    public UpdateApartmentDto(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners, Set<Payment> payments) {
         this.id = id;
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
@@ -24,6 +26,7 @@ public class UpdateApartmentDto {
         this.building = building;
         this.residents = residents;
         this.owners = owners;
+        this.payments = payments;
     }
 
     public long getId() {
@@ -56,5 +59,9 @@ public class UpdateApartmentDto {
 
     public Set<Resident> getOwners() {
         return owners;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
     }
 }

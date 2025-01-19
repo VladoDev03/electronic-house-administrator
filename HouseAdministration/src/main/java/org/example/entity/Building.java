@@ -1,9 +1,6 @@
 package org.example.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -19,24 +16,29 @@ public class Building extends BaseEntity {
     @JoinColumn(name = "responsible_employee_id")
     private Employee responsibleEmployee;
 
+    @OneToOne(mappedBy = "building")
+    private Service service;
+
     public Building() {
     }
 
-    public Building(String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee) {
+    public Building(String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee, Service service) {
         this.address = address;
         this.floors = floors;
         this.area = area;
         this.apartments = apartments;
         this.responsibleEmployee = responsibleEmployee;
+        this.service = service;
     }
 
-    public Building(long id, String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee) {
+    public Building(long id, String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee, Service service) {
         super(id);
         this.address = address;
         this.floors = floors;
         this.area = area;
         this.apartments = apartments;
         this.responsibleEmployee = responsibleEmployee;
+        this.service = service;
     }
 
     public Employee getResponsibleEmployee() {
@@ -57,5 +59,9 @@ public class Building extends BaseEntity {
 
     public String getAddress() {
         return address;
+    }
+
+    public Service getService() {
+        return service;
     }
 }

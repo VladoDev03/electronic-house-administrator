@@ -2,6 +2,7 @@ package org.example.dto.Building;
 
 import org.example.entity.Apartment;
 import org.example.entity.Employee;
+import org.example.entity.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ public class CreateBuildingDto {
     private final double area;
     private Set<Apartment> apartments;
     private Employee responsibleEmployee;
+    private Service service;
 
     public CreateBuildingDto(String address, int floors, double area) {
         this.address = address;
@@ -20,10 +22,11 @@ public class CreateBuildingDto {
         this.apartments = new HashSet<>();
     }
 
-    public CreateBuildingDto(String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee) {
+    public CreateBuildingDto(String address, int floors, double area, Set<Apartment> apartments, Employee responsibleEmployee, Service service) {
         this(address, floors, area);
         this.apartments = apartments;
         this.responsibleEmployee = responsibleEmployee;
+        this.service = service;
     }
 
     public String getAddress() {
@@ -44,5 +47,9 @@ public class CreateBuildingDto {
 
     public Employee getResponsibleEmployee() {
         return responsibleEmployee;
+    }
+
+    public Service getService() {
+        return service;
     }
 }

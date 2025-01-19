@@ -19,6 +19,9 @@ public class Apartment extends BaseEntity {
     @OneToMany(mappedBy = "apartment")
     private Set<Resident> residents;
 
+    @OneToMany(mappedBy = "apartment")
+    private Set<Payment> payments;
+
     @ManyToMany
     @JoinTable(
             name = "apartment_owners",
@@ -30,17 +33,18 @@ public class Apartment extends BaseEntity {
     public Apartment() {
     }
 
-    public Apartment(int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners) {
+    public Apartment(int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
         this.area = area;
         this.hasPet = hasPet;
         this.building = building;
         this.residents = residents;
+        this.payments = payments;
         this.owners = owners;
     }
 
-    public Apartment(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners) {
+    public Apartment(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
         super(id);
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
@@ -48,6 +52,7 @@ public class Apartment extends BaseEntity {
         this.hasPet = hasPet;
         this.building = building;
         this.residents = residents;
+        this.payments = payments;
         this.owners = owners;
     }
 
@@ -77,5 +82,9 @@ public class Apartment extends BaseEntity {
 
     public Set<Resident> getOwners() {
         return owners;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
     }
 }

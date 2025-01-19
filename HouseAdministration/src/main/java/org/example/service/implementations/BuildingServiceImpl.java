@@ -14,10 +14,26 @@ import java.util.HashSet;
 public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDto createBuilding(CreateBuildingDto buildingDto) {
-        Building building = new Building(buildingDto.getAddress(), buildingDto.getFloors(), buildingDto.getArea(), buildingDto.getApartments(), buildingDto.getResponsibleEmployee());
+        Building building = new Building(
+                buildingDto.getAddress(),
+                buildingDto.getFloors(),
+                buildingDto.getArea(),
+                buildingDto.getApartments(),
+                buildingDto.getResponsibleEmployee(),
+                buildingDto.getService()
+        );
+
         BuildingDao.createBuilding(building);
 
-        BuildingDto result = new BuildingDto(building.getId(), building.getAddress(), building.getFloors(), building.getArea(), building.getApartments(), building.getResponsibleEmployee());
+        BuildingDto result = new BuildingDto(
+                building.getId(),
+                building.getAddress(),
+                building.getFloors(),
+                building.getArea(),
+                building.getApartments(),
+                building.getResponsibleEmployee(),
+                building.getService()
+        );
 
         return result;
     }
@@ -31,14 +47,32 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDto getBuildingById(long buildingId) {
         Building building = BuildingDao.getBuildingById(buildingId);
-        BuildingDto result = new BuildingDto(building.getId(), building.getAddress(), building.getFloors(), building.getArea(), building.getApartments(), building.getResponsibleEmployee());
+
+        BuildingDto result = new BuildingDto(
+                building.getId(),
+                building.getAddress(),
+                building.getFloors(),
+                building.getArea(),
+                building.getApartments(),
+                building.getResponsibleEmployee(),
+                building.getService()
+        );
 
         return result;
     }
 
     @Override
     public void updateBuilding(UpdateBuildingDto buildingToUpdate) {
-        Building building = new Building(buildingToUpdate.getId(), buildingToUpdate.getAddress(), buildingToUpdate.getFloors(), buildingToUpdate.getArea(), buildingToUpdate.getApartments(), buildingToUpdate.getResponsibleEmployee());
+        Building building = new Building(
+                buildingToUpdate.getId(),
+                buildingToUpdate.getAddress(),
+                buildingToUpdate.getFloors(),
+                buildingToUpdate.getArea(),
+                buildingToUpdate.getApartments(),
+                buildingToUpdate.getResponsibleEmployee(),
+                buildingToUpdate.getService()
+        );
+
         BuildingDao.updateBuilding(building);
     }
 
@@ -53,7 +87,8 @@ public class BuildingServiceImpl implements BuildingService {
                 building.getFloors(),
                 building.getArea(),
                 new HashSet<>(),
-                employee
+                employee,
+                building.getService()
         );
 
         updateBuilding(updatedBuilding);

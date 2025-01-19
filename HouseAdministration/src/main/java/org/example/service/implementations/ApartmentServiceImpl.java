@@ -22,7 +22,8 @@ public class ApartmentServiceImpl implements ApartmentService {
                 apartment.getHasPet(),
                 apartment.getBuilding(),
                 apartment.getResidents(),
-                apartment.getOwners()
+                apartment.getOwners(),
+                apartment.getPayments()
         );
 
         return apartmentDto;
@@ -37,6 +38,7 @@ public class ApartmentServiceImpl implements ApartmentService {
                 apartmentDto.getHasPet(),
                 apartmentDto.getBuilding(),
                 apartmentDto.getResidents(),
+                apartmentDto.getPayments(),
                 apartmentDto.getOwners()
         );
 
@@ -50,7 +52,8 @@ public class ApartmentServiceImpl implements ApartmentService {
                 apartment.getHasPet(),
                 apartment.getBuilding(),
                 apartment.getResidents(),
-                apartment.getOwners()
+                apartment.getOwners(),
+                apartment.getPayments()
         );
 
         return result;
@@ -65,13 +68,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public void updateApartment(UpdateApartmentDto apartmentDto) {
         Apartment apartment = new Apartment(
-                apartmentDto.getId(),
                 apartmentDto.getFloor(),
                 apartmentDto.getApartmentNumber(),
                 apartmentDto.getArea(),
                 apartmentDto.getHasPet(),
                 apartmentDto.getBuilding(),
                 apartmentDto.getResidents(),
+                apartmentDto.getPayments(),
                 apartmentDto.getOwners()
         );
 
@@ -91,7 +94,8 @@ public class ApartmentServiceImpl implements ApartmentService {
                 apartment.getHasPet(),
                 building,
                 apartment.getResidents(),
-                apartment.getOwners()
+                apartment.getOwners(),
+                apartment.getPayments()
         );
 
         updateApartment(apartmentDto);

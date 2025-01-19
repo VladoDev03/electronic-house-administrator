@@ -68,6 +68,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public void updateApartment(UpdateApartmentDto apartmentDto) {
         Apartment apartment = new Apartment(
+                apartmentDto.getId(),
                 apartmentDto.getFloor(),
                 apartmentDto.getApartmentNumber(),
                 apartmentDto.getArea(),

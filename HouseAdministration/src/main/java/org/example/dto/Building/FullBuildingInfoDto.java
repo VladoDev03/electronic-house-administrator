@@ -5,16 +5,22 @@ import org.example.dto.Apartment.FullApartmentInfoDto;
 import java.util.List;
 
 public class FullBuildingInfoDto {
+    private final long id;
     private final String address;
     private final int floors;
     private final double area;
     private final List<FullApartmentInfoDto> apartments;
 
-    public FullBuildingInfoDto(String address, int floors, double area, List<FullApartmentInfoDto> apartments) {
+    public FullBuildingInfoDto(long id, String address, int floors, double area, List<FullApartmentInfoDto> apartments) {
+        this.id = id;
         this.address = address;
         this.floors = floors;
         this.area = area;
         this.apartments = apartments;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getAddress() {

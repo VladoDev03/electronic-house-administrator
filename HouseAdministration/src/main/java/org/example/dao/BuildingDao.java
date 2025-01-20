@@ -1,12 +1,9 @@
 package org.example.dao;
 
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.Apartment;
 import org.example.entity.Building;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import java.util.List;
 
 public class BuildingDao {
     public static Building getBuildingById(long id) {
@@ -45,7 +42,7 @@ public class BuildingDao {
         }
     }
 
-    public static Building getBuildingWithApartmentsWithResidents(long buildingId) {
+    public static Building getBuildingWithApartmentsWithResidentsWithSerivce(long buildingId) {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -54,8 +51,9 @@ public class BuildingDao {
             building = session.createQuery(
                             "select distinct b from Building as b" +
                                     " left join fetch b.apartments as a" +
-                                    " left join fetch a.residents" +
-                                    " left join fetch a.owners" +
+                                    " left join fetch b.service as s" +
+                                    " left join fetch a.residents as r" +
+                                    " left join fetch a.owners as o" +
                                     " where b.id = :buildingId",
                             Building.class)
                     .setParameter("buildingId", buildingId)
@@ -77,6 +75,27 @@ public class BuildingDao {
                             "select distinct b from Building as b" +
                                     " left join fetch b.apartments as a" +
                                     " left join fetch a.residents" +
+                                    " where b.id = :buildingId",
+                            Building.class
+                    )
+                    .setParameter("buildingId", buildingId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return building;
+    }
+
+    public static Building getBuildingWithServices(long buildingId) {
+        Building building;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            building = session.createQuery(
+                            "select distinct b from Building as b" +
+                                    " left join fetch b.service as s" +
                                     " where b.id = :buildingId",
                             Building.class
                     )

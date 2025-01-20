@@ -5,6 +5,7 @@ import org.example.dto.Resident.FullResidentInfoDto;
 import java.util.List;
 
 public class FullApartmentInfoDto {
+    private long id;
     private final int floor;
     private final int apartmentNumber;
     private final int area;
@@ -26,6 +27,23 @@ public class FullApartmentInfoDto {
         this.hasPet = hasPet;
         this.residents = residents;
         this.owners = owners;
+    }
+
+    public FullApartmentInfoDto(
+            long id,
+            int floor,
+            int apartmentNumber,
+            int area,
+            boolean hasPet,
+            List<FullResidentInfoDto> residents,
+            List<FullResidentInfoDto> owners
+    ) {
+        this(floor, apartmentNumber, area, hasPet, residents, owners);
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public int getFloor() {

@@ -103,5 +103,7 @@ public class Main {
 
         companyService.getCompaniesWithIncome().forEach(System.out::println);
         System.out.println(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
+
+        buildingService.createPayments(buildingDto1.getId()).forEach(System.out::println);
     }
 }

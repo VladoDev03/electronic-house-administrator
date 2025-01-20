@@ -4,14 +4,17 @@ import org.example.dao.BuildingDao;
 import org.example.dao.EmployeeDao;
 import org.example.dto.Apartment.FullApartmentInfoDto;
 import org.example.dto.Building.*;
+import org.example.dto.Payment.NewPaymentDto;
 import org.example.dto.Resident.FullResidentInfoDto;
 import org.example.dto.Resident.ResidentInBuildingDto;
-import org.example.entity.Building;
-import org.example.entity.Employee;
+import org.example.dto.Service.ServiceInfoDto;
+import org.example.entity.*;
 import org.example.service.contracts.BuildingService;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class BuildingServiceImpl implements BuildingService {
     @Override
@@ -98,9 +101,10 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public FullBuildingInfoDto getBuildingWithApartmentsInfoWithResidentsInfo(long buildingId) {
-        Building building = BuildingDao.getBuildingWithApartmentsWithResidents(buildingId);
+        Building building = BuildingDao.getBuildingWithApartmentsWithResidentsWithSerivce(buildingId);
 
         FullBuildingInfoDto result = new FullBuildingInfoDto(
+                building.getId(),
                 building.getAddress(),
                 building.getFloors(),
                 building.getArea(),
@@ -108,6 +112,7 @@ public class BuildingServiceImpl implements BuildingService {
                         .stream()
                         .map(a -> {
                             FullApartmentInfoDto resultApartment = new FullApartmentInfoDto(
+                                    a.getId(),
                                     a.getFloor(),
                                     a.getApartmentNumber(),
                                     a.getArea(),
@@ -172,5 +177,43 @@ public class BuildingServiceImpl implements BuildingService {
         );
 
         return result;
+    }
+
+    @Override
+    public List<NewPaymentDto> createPayments(long buildingId) {
+        FullBuildingInfoDto buildingWithData = getBuildingWithApartmentsInfoWithResidentsInfo(buildingId);
+        Building buildingWithService = BuildingDao.getBuildingWithServices(buildingId);
+
+        List<NewPaymentDto> newPayments = new ArrayList<>();
+
+        ServiceInfoDto service = new ServiceInfoDto(
+                buildingWithService.getService().getPriceArea(),
+                buildingWithService.getService().getPriceResident(),
+                buildingWithService.getService().getPriceAnimal(),
+                buildingWithService.getService().getPriceElevator()
+        );
+
+        for (FullApartmentInfoDto apartment : buildingWithData.getApartments()) {
+            double total = 0;
+
+            if (apartment.getHasPet()) {
+                total = total + service.getPriceAnimal();
+            }
+
+            total = total + apartment.getArea() * service.getPriceArea();
+
+            for (FullResidentInfoDto resident : apartment.getResidents()) {
+                total = total + service.getPriceResident();
+
+                if (resident.getUsesElevator()) {
+                    total = total + service.getPriceElevator();
+                }
+            }
+
+            NewPaymentDto payment = new NewPaymentDto(total, apartment.getApartmentNumber());
+            newPayments.add(payment);
+        }
+
+        return newPayments;
     }
 }

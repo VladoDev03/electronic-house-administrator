@@ -11,6 +11,7 @@ SELECT * FROM employee;
 SELECT * FROM resident;
 SELECT * FROM service;
 SELECT * FROM payment;
+SELECT * FROM apartment_owners;
 
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM service;
@@ -20,6 +21,7 @@ DELETE FROM company;
 DELETE FROM apartment;
 DELETE FROM resident;
 DELETE FROM payment;
+DELETE FROM apartment_owners;
 SET SQL_SAFE_UPDATES = 1;
 
 SELECT e.id AS employee_id, b.id AS building_id FROM building AS b

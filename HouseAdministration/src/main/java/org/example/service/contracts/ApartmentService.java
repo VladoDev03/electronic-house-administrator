@@ -10,4 +10,5 @@ public interface ApartmentService {
     void deleteApartment(long apartmentId);
     void updateApartment(UpdateApartmentDto apartmentDto);
     void addApartmentToBuilding(long apartmentId, long buildingId);
+    void setApartmentOwner(long apartmentId, long ownerId);
 }

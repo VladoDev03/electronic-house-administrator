@@ -15,7 +15,6 @@ import org.example.dto.Resident.CreateResidentDto;
 import org.example.dto.Resident.ResidentDto;
 import org.example.dto.Service.CreateServiceDto;
 import org.example.dto.Service.ServiceDto;
-import org.example.entity.Apartment;
 import org.example.service.contracts.*;
 import org.example.service.implementations.*;
 
@@ -40,16 +39,20 @@ public class Main {
         ServiceDto serviceDto = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, null));
         PaymentDto paymentDto = paymentService.createPayment(new CreatePaymentDto(1500, null));
         ResidentDto residentDto1 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
-        ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));
-        ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 32, true, new HashSet<>(), null));
+        ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 48, true, new HashSet<>(), null));
+        ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));
 
         buildingService.assignBuildingToEmployee(employeeDto.getId(), buildingDto.getId());
         employeeService.hireEmployee(employeeDto.getId(), companyDto.getId());
         apartmentService.addApartmentToBuilding(apartmentDto.getId(), buildingDto.getId());
         serviceService.setServiceToBuilding(serviceDto.getId(), buildingDto.getId());
         paymentService.addPaymentToApartment(paymentDto.getId(), apartmentDto.getId());
+
         residentService.addResidentToApartment(residentDto1.getId(), apartmentDto.getId());
         residentService.addResidentToApartment(residentDto2.getId(), apartmentDto.getId());
         residentService.addResidentToApartment(residentDto3.getId(), apartmentDto.getId());
+
+        apartmentService.setApartmentOwner(apartmentDto.getId(), residentDto1.getId());
+        apartmentService.setApartmentOwner(apartmentDto.getId(), residentDto2.getId());
     }
 }

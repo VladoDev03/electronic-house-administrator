@@ -102,5 +102,6 @@ public class Main {
         System.out.println(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
 
         companyService.getCompaniesWithIncome().forEach(System.out::println);
+        System.out.println(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
     }
 }

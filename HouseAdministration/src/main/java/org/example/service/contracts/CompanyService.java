@@ -1,7 +1,6 @@
 package org.example.service.contracts;
 
 import org.example.dto.Company.*;
-import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.entity.Employee;
 
 import java.util.List;
@@ -13,6 +12,7 @@ public interface CompanyService {
     CompanyDto getCompanyById(long companyId);
     void updateCompany(UpdateCompanyDto companyToUpdate);
     Set<Employee> getCompanyEmployees(long id);
+    FullCompanyInfoDto getCompanyEmployeesWithBuildingsInfo(long companyId);
     CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId);
     List<CompanyWithIncomeDto> getCompaniesWithIncome();
 }

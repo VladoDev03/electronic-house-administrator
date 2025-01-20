@@ -1,8 +1,10 @@
 package org.example.service.implementations;
 
 import org.example.dao.CompanyDao;
+import org.example.dto.Building.BuildingInfoDto;
 import org.example.dto.Company.*;
 import org.example.dto.Employee.EmployeeBuildingCountDto;
+import org.example.dto.Employee.FullEmployeeWithBuildingsInfoDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.entity.Payment;
@@ -45,6 +47,38 @@ public class CompanyServiceImpl implements CompanyService {
         Set<Employee> employees = CompanyDao.getCompanyEmployees(id);
 
         return employees;
+    }
+
+    @Override
+    public FullCompanyInfoDto getCompanyEmployeesWithBuildingsInfo(long companyId) {
+        Company company = CompanyDao.getCompanyWithEmployeesWithBuildings(companyId);
+
+        FullCompanyInfoDto result = new FullCompanyInfoDto(
+                company.getName(),
+                company.getFoundationDate(),
+                company.getEmployees()
+                        .stream()
+                        .map(e -> new FullEmployeeWithBuildingsInfoDto(
+                                e.getFirstName(),
+                                e.getLastName(),
+                                e.getAssignedBuildings()
+                                        .stream()
+                                        .map(building -> new BuildingInfoDto(
+                                                building.getAddress(),
+                                                building.getFloors(),
+                                                building.getArea()
+                                        ))
+                                        .toList()
+                        ))
+                        .sorted(
+                                Comparator.comparing(FullEmployeeWithBuildingsInfoDto::getFirstName)
+                                        .thenComparing(FullEmployeeWithBuildingsInfoDto::getLastName)
+                        )
+
+                        .toList()
+        );
+
+        return result;
     }
 
     @Override

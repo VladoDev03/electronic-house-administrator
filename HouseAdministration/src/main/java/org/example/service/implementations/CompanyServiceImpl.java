@@ -1,17 +1,15 @@
 package org.example.service.implementations;
 
 import org.example.dao.CompanyDao;
-import org.example.dao.EmployeeDao;
-import org.example.dto.Company.CompanyDto;
-import org.example.dto.Company.CompanyWithEmployees;
-import org.example.dto.Company.CreateCompanyDto;
-import org.example.dto.Company.UpdateCompanyDto;
+import org.example.dto.Company.*;
 import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
+import org.example.entity.Payment;
 import org.example.service.contracts.CompanyService;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 public class CompanyServiceImpl implements CompanyService {
@@ -68,6 +66,29 @@ public class CompanyServiceImpl implements CompanyService {
 
                         .toList()
         );
+
+        return result;
+    }
+
+    @Override
+    public List<CompanyWithIncomeDto> getCompaniesWithIncome() {
+        List<Company> companies = CompanyDao.getCompaniesWithPayments();
+
+        List<CompanyWithIncomeDto> result = companies
+                .stream()
+                .map(company -> new CompanyWithIncomeDto(
+                        company.getName(),
+                        company.getFoundationDate(),
+                        company.getEmployees()
+                                .stream()
+                                .flatMap(employee -> employee.getAssignedBuildings().stream())
+                                .flatMap(building -> building.getApartments().stream())
+                                .flatMap(apartment -> apartment.getPayments().stream())
+                                .mapToDouble(Payment::getAmount)
+                                .sum()
+                ))
+                .sorted(Comparator.comparing(CompanyWithIncomeDto::getIncome).reversed())
+                .toList();
 
         return result;
     }

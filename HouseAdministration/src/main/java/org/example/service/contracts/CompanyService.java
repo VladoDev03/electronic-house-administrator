@@ -1,9 +1,6 @@
 package org.example.service.contracts;
 
-import org.example.dto.Company.CompanyDto;
-import org.example.dto.Company.CompanyWithEmployees;
-import org.example.dto.Company.CreateCompanyDto;
-import org.example.dto.Company.UpdateCompanyDto;
+import org.example.dto.Company.*;
 import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.entity.Employee;
 
@@ -17,4 +14,5 @@ public interface CompanyService {
     void updateCompany(UpdateCompanyDto companyToUpdate);
     Set<Employee> getCompanyEmployees(long id);
     CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId);
+    List<CompanyWithIncomeDto> getCompaniesWithIncome();
 }

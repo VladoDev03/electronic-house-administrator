@@ -81,7 +81,7 @@ public class EmployeeDao {
             Transaction transaction = session.beginTransaction();
 
             employees = session.createQuery(
-                            "select e from Employee e" +
+                            "select distinct e from Employee e" +
                                     " left join fetch e.assignedBuildings",
                             Employee.class)
                     .getResultList();

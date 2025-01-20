@@ -86,5 +86,13 @@ public class Main {
 
         employeeService.getEmployeesWithBuildingCount().forEach(System.out::println);
         System.out.println(employeeService.getEmployeesWithBuildingCount().size());
+
+
+        ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>(), null));
+        ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
+        apartmentService.addApartmentToBuilding(apartmentDto3.getId(), buildingDto1.getId());
+        residentService.addResidentToApartment(residentDto7.getId(), apartmentDto3.getId());
+
+        System.out.println(buildingService.getBuildingResidents(buildingDto1.getId()));
     }
 }

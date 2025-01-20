@@ -3,11 +3,19 @@ package org.example.service.implementations;
 import org.example.dao.BuildingDao;
 import org.example.dao.EmployeeDao;
 import org.example.dto.Building.BuildingDto;
+import org.example.dto.Building.BuildingResidentsDto;
 import org.example.dto.Building.CreateBuildingDto;
 import org.example.dto.Building.UpdateBuildingDto;
+import org.example.dto.Employee.EmployeeBuildingCountDto;
+import org.example.dto.Resident.ResidentInBuildingDto;
 import org.example.entity.Building;
 import org.example.entity.Employee;
 import org.example.service.contracts.BuildingService;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BuildingServiceImpl implements BuildingService {
     @Override
@@ -90,5 +98,31 @@ public class BuildingServiceImpl implements BuildingService {
         );
 
         updateBuilding(updatedBuilding);
+    }
+
+    @Override
+    public BuildingResidentsDto getBuildingResidents(long buildingId) {
+        Building building = BuildingDao.getBuildingWithResidents(buildingId);
+
+        List<ResidentInBuildingDto> residents = building.getApartments()
+                .stream()
+                .flatMap(a -> a.getResidents()
+                        .stream()
+                        .map(r -> new ResidentInBuildingDto(
+                                r.getFirstName(),
+                                r.getLastName(),
+                                r.getAge()
+                        )))
+                .sorted(Comparator.comparing(ResidentInBuildingDto::getFirstName)
+                        .thenComparing(ResidentInBuildingDto::getLastName)
+                        .thenComparing(ResidentInBuildingDto::getAge))
+                .toList();
+
+        BuildingResidentsDto result = new BuildingResidentsDto(
+                building.getAddress(),
+                residents
+        );
+
+        return result;
     }
 }

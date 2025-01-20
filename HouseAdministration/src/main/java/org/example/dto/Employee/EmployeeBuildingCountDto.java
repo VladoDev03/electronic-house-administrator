@@ -1,9 +1,9 @@
 package org.example.dto.Employee;
 
 public class EmployeeBuildingCountDto {
-    private String firstName;
-    private String lastName;
-    private int buildingCount;
+    private final String firstName;
+    private final String lastName;
+    private final int buildingCount;
 
     public EmployeeBuildingCountDto(String firstName, String lastName, int buildingCount) {
         this.firstName = firstName;

@@ -5,6 +5,8 @@ import org.example.entity.Building;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class BuildingDao {
     public static Building getBuildingById(long id) {
         Building building;
@@ -40,5 +42,27 @@ public class BuildingDao {
             session.saveOrUpdate(building);
             transaction.commit();
         }
+    }
+
+    public static Building getBuildingWithResidents(long buildingId) {
+        Building building;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            building = session.createQuery(
+                            "select distinct b from Building as b" +
+                                    " left join fetch b.apartments as a" +
+                                    " left join fetch a.residents" +
+                                    " where b.id = :buildingId",
+                            Building.class
+                    )
+                    .setParameter("buildingId", buildingId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return building;
     }
 }

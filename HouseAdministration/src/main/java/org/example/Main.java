@@ -55,7 +55,7 @@ public class Main {
         apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto1.getId());
         apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto2.getId());
 
-        EmployeeDto employeeDto2 = employeeService.createEmployee(new CreateEmployeeDto("Alice", "Johnson", 48, new HashSet<>(), null));
+        EmployeeDto employeeDto2 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 54, new HashSet<>(), null));
         EmployeeDto employeeDto3 = employeeService.createEmployee(new CreateEmployeeDto("Alice", "Johnson", 48, new HashSet<>(), null));
         CompanyDto companyDto2 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
         BuildingDto buildingDto2 = buildingService.createBuilding(new CreateBuildingDto("What else", 10, 100, new HashSet<>(), null, null));
@@ -73,6 +73,7 @@ public class Main {
         buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto4.getId());
 
         employeeService.hireEmployee(employeeDto2.getId(), companyDto2.getId());
+        employeeService.hireEmployee(employeeDto3.getId(), companyDto2.getId());
         apartmentService.addApartmentToBuilding(apartmentDto2.getId(), buildingDto2.getId());
         serviceService.setServiceToBuilding(serviceDto2.getId(), buildingDto2.getId());
         paymentService.addPaymentToApartment(paymentDto2.getId(), apartmentDto2.getId());
@@ -84,14 +85,15 @@ public class Main {
         apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto4.getId());
         apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto5.getId());
 
-        employeeService.getEmployeesWithBuildingCount().forEach(System.out::println);
-        System.out.println(employeeService.getEmployeesWithBuildingCount().size());
-
+        System.out.println(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()));
+        System.out.println(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()).getEmployees().size());
 
         ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>(), null));
-        ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
+        ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 63, true, new HashSet<>(), null));
+        ResidentDto residentDto8 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
         apartmentService.addApartmentToBuilding(apartmentDto3.getId(), buildingDto1.getId());
         residentService.addResidentToApartment(residentDto7.getId(), apartmentDto3.getId());
+        residentService.addResidentToApartment(residentDto8.getId(), apartmentDto3.getId());
 
         System.out.println(buildingService.getBuildingResidents(buildingDto1.getId()));
     }

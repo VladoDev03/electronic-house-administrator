@@ -6,6 +6,7 @@ import org.example.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
 import java.util.Set;
 
 public class CompanyDao {
@@ -61,5 +62,26 @@ public class CompanyDao {
         }
 
         return company.getEmployees();
+    }
+
+    public static Company getCompanyWithEmployeesWithBuildings(long companyId) {
+        Company company;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            company = session.createQuery(
+                            "select distinct c from Company c" +
+                                    " left join fetch c.employees as e" +
+                                    " left join fetch e.assignedBuildings" +
+                                    " where c.id = :companyId",
+                            Company.class)
+                    .setParameter("companyId", companyId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return company;
     }
 }

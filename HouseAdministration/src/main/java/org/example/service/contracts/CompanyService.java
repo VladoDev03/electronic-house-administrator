@@ -1,10 +1,13 @@
 package org.example.service.contracts;
 
 import org.example.dto.Company.CompanyDto;
+import org.example.dto.Company.CompanyWithEmployees;
 import org.example.dto.Company.CreateCompanyDto;
 import org.example.dto.Company.UpdateCompanyDto;
+import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.entity.Employee;
 
+import java.util.List;
 import java.util.Set;
 
 public interface CompanyService {
@@ -13,4 +16,5 @@ public interface CompanyService {
     CompanyDto getCompanyById(long companyId);
     void updateCompany(UpdateCompanyDto companyToUpdate);
     Set<Employee> getCompanyEmployees(long id);
+    CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId);
 }

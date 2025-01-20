@@ -89,24 +89,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         updateEmployee(updatedEmployee);
     }
-
-    @Override
-    public List<EmployeeBuildingCountDto> getEmployeesWithBuildingCount() {
-        List<EmployeeBuildingCountDto> result = EmployeeDao
-                .getAllEmployeesWithBuildings()
-                .stream()
-                .map(e -> {
-                    EmployeeBuildingCountDto employeeBuildingCountDto = new EmployeeBuildingCountDto(
-                            e.getFirstName(),
-                            e.getLastName(),
-                            e.getAssignedBuildings().size()
-                    );
-
-                    return employeeBuildingCountDto;
-                })
-                .sorted(Comparator.comparingInt(EmployeeBuildingCountDto::getBuildingCount).reversed())
-                .toList();
-
-        return result;
-    }
 }

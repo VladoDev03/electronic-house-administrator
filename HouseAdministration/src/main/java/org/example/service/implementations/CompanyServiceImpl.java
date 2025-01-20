@@ -1,13 +1,17 @@
 package org.example.service.implementations;
 
 import org.example.dao.CompanyDao;
+import org.example.dao.EmployeeDao;
 import org.example.dto.Company.CompanyDto;
+import org.example.dto.Company.CompanyWithEmployees;
 import org.example.dto.Company.CreateCompanyDto;
 import org.example.dto.Company.UpdateCompanyDto;
+import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.service.contracts.CompanyService;
 
+import java.util.Comparator;
 import java.util.Set;
 
 public class CompanyServiceImpl implements CompanyService {
@@ -43,5 +47,28 @@ public class CompanyServiceImpl implements CompanyService {
         Set<Employee> employees = CompanyDao.getCompanyEmployees(id);
 
         return employees;
+    }
+
+    @Override
+    public CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId) {
+        Company company = CompanyDao.getCompanyWithEmployeesWithBuildings(companyId);
+
+        CompanyWithEmployees result = new CompanyWithEmployees(
+                company.getName(),
+                company.getEmployees()
+                        .stream()
+                        .map(e -> new EmployeeBuildingCountDto(
+                                e.getFirstName(),
+                                e.getLastName(),
+                                e.getAssignedBuildings().size()
+                        ))
+                        .sorted(Comparator.comparing(EmployeeBuildingCountDto::getFirstName)
+                                .thenComparing(EmployeeBuildingCountDto::getLastName)
+                                .thenComparing(Comparator.comparingInt(EmployeeBuildingCountDto::getBuildingCount).reversed()))
+
+                        .toList()
+        );
+
+        return result;
     }
 }

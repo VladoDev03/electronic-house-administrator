@@ -27,8 +27,8 @@ public class EmployeeBuildingCountDto {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Full Name: ").append(this.getFirstName()).append(" ").append(this.getLastName()).append("\n");
-        sb.append("Buildings: ").append(this.getBuildingCount());
+        sb.append("    Full Name: ").append(this.getFirstName()).append(" ").append(this.getLastName()).append("\n");
+        sb.append("    Buildings: ").append(this.getBuildingCount());
 
         return sb.toString();
     }

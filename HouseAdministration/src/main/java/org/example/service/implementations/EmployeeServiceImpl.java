@@ -3,13 +3,14 @@ package org.example.service.implementations;
 import org.example.dao.CompanyDao;
 import org.example.dao.EmployeeDao;
 import org.example.dto.Employee.CreateEmployeeDto;
+import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.dto.Employee.EmployeeDto;
 import org.example.dto.Employee.UpdateEmployeeDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.service.contracts.EmployeeService;
 
-import java.util.HashSet;
+import java.util.*;
 
 public class EmployeeServiceImpl implements EmployeeService {
     @Override
@@ -87,5 +88,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
 
         updateEmployee(updatedEmployee);
+    }
+
+    @Override
+    public List<EmployeeBuildingCountDto> getEmployeesWithBuildingCount() {
+        List<EmployeeBuildingCountDto> result = EmployeeDao
+                .getAllEmployeesWithBuildings()
+                .stream()
+                .map(e -> {
+                    EmployeeBuildingCountDto employeeBuildingCountDto = new EmployeeBuildingCountDto(
+                            e.getFirstName(),
+                            e.getLastName(),
+                            e.getAssignedBuildings().size()
+                    );
+
+                    return employeeBuildingCountDto;
+                })
+                .sorted(Comparator.comparingInt(EmployeeBuildingCountDto::getBuildingCount).reversed())
+                .toList();
+
+        return result;
     }
 }

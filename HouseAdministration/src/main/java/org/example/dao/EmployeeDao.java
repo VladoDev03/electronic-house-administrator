@@ -6,6 +6,8 @@ import org.example.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class EmployeeDao {
     public static Employee getEmployeeById(long id) {
         Employee employee;
@@ -60,7 +62,7 @@ public class EmployeeDao {
 
             employee = session.createQuery(
                             "select e from Employee e" +
-                                    " join fetch e.assignedBuildings" +
+                                    " left join fetch e.assignedBuildings" +
                                     " where e.id = :id",
                             Employee.class)
                     .setParameter("id", employeeId)
@@ -70,5 +72,23 @@ public class EmployeeDao {
         }
 
         return employee;
+    }
+
+    public static List<Employee> getAllEmployeesWithBuildings() {
+        List<Employee> employees;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            employees = session.createQuery(
+                            "select e from Employee e" +
+                                    " left join fetch e.assignedBuildings",
+                            Employee.class)
+                    .getResultList();
+
+            transaction.commit();
+        }
+
+        return employees;
     }
 }

@@ -6,13 +6,22 @@ import org.example.dto.Employee.CreateEmployeeDto;
 import org.example.dto.Employee.EmployeeBuildingCountDto;
 import org.example.dto.Employee.EmployeeDto;
 import org.example.dto.Employee.UpdateEmployeeDto;
+import org.example.dto.Payment.NewPaymentDto;
+import org.example.entity.Building;
 import org.example.entity.Company;
 import org.example.entity.Employee;
+import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.EmployeeService;
 
 import java.util.*;
 
 public class EmployeeServiceImpl implements EmployeeService {
+    private final BuildingService buildingService;
+
+    public EmployeeServiceImpl(BuildingService buildingService) {
+        this.buildingService = buildingService;
+    }
+
     @Override
     public EmployeeDto createEmployee(CreateEmployeeDto employeeDto) {
         Employee employee = new Employee(
@@ -88,5 +97,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
 
         updateEmployee(updatedEmployee);
+    }
+
+    @Override
+    public double getEmployeePayments(long employeeId) {
+        Employee employee = EmployeeDao.getEmployeeWithBuildings(employeeId);
+        double total = 0;
+
+        for (Building building : employee.getAssignedBuildings()) {
+            double currentAmount = buildingService
+                    .createPayments(building.getId())
+                    .stream()
+                    .mapToDouble(NewPaymentDto::getAmount)
+                    .sum();
+
+            total = total + currentAmount;
+        }
+
+        return total;
     }
 }

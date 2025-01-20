@@ -25,7 +25,7 @@ public class Main {
         SessionFactoryUtil.getSessionFactory().openSession();
 
         BuildingService buildingService = new BuildingServiceImpl();
-        EmployeeService employeeService = new EmployeeServiceImpl();
+        EmployeeService employeeService = new EmployeeServiceImpl(buildingService);
         CompanyService companyService = new CompanyServiceImpl();
         ApartmentService apartmentService = new ApartmentServiceImpl();
         ServiceService serviceService = new ServiceServiceImpl();
@@ -105,5 +105,7 @@ public class Main {
         System.out.println(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
 
         buildingService.createPayments(buildingDto1.getId()).forEach(System.out::println);
+
+        System.out.println(employeeService.getEmployeePayments(employeeDto1.getId()));
     }
 }

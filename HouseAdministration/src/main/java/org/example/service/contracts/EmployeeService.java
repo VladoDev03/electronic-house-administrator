@@ -11,4 +11,5 @@ public interface EmployeeService {
     EmployeeDto getEmployeeById(long id);
     void updateEmployee(UpdateEmployeeDto employeeDto);
     void hireEmployee(long employeeId, long companyId);
+    double getEmployeePayments(long employeeId);
 }

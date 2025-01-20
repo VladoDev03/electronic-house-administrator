@@ -3,22 +3,28 @@ package org.example.dto.Payment;
 import java.time.LocalDate;
 
 public class NewPaymentDto {
+    private final long apartmentId;
     private final double amount;
     private final LocalDate paymentDate;
     private final long apartmentNumber;
 
-    public NewPaymentDto(double amount, long apartmentId) {
+    public NewPaymentDto(long apartmentId, double amount, long apartmentNumber) {
+        this.apartmentId = apartmentId;
         this.amount = amount;
         this.paymentDate = LocalDate.now();
-        this.apartmentNumber = apartmentId;
+        this.apartmentNumber = apartmentNumber;
     }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
+    public long getApartmentId() {
+        return apartmentId;
     }
 
     public double getAmount() {
         return amount;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
     }
 
     public long getApartmentNumber() {

@@ -3,13 +3,23 @@ package org.example.service.implementations;
 import org.example.dao.ApartmentDao;
 import org.example.dao.PaymentDao;
 import org.example.dto.Payment.CreatePaymentDto;
+import org.example.dto.Payment.NewPaymentDto;
 import org.example.dto.Payment.PaymentDto;
 import org.example.dto.Payment.UpdatePaymentDto;
 import org.example.entity.Apartment;
 import org.example.entity.Payment;
+import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.PaymentService;
 
+import java.util.List;
+
 public class PaymentServiceImpl implements PaymentService {
+    private final BuildingService buildingService;
+
+    public PaymentServiceImpl(BuildingService buildingService) {
+        this.buildingService = buildingService;
+    }
+
     @Override
     public PaymentDto getPaymentById(long paymentId) {
         Payment payment = PaymentDao.getPaymentById(paymentId);
@@ -75,5 +85,36 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
         updatePayment(updatePaymentDto);
+    }
+
+    @Override
+    public void createMultiplePayments(List<CreatePaymentDto> paymentDtos) {
+        PaymentDao.createMultiplePayments(
+                paymentDtos
+                        .stream()
+                        .map(p -> {
+                            Payment payment = new Payment(
+                                    p.getAmount(),
+                                    p.getPaymentDate(),
+                                    p.getApartment()
+                            );
+
+                            return payment;
+                        })
+                        .toList()
+        );
+    }
+
+    @Override
+    public void addMultiplePaymentsToBuilding(long buildingId) {
+        for (NewPaymentDto payment : buildingService.createPayments(buildingId)) {
+            CreatePaymentDto newPayment = new CreatePaymentDto(
+                    payment.getAmount(),
+                    null
+            );
+
+            PaymentDto addedPayment = createPayment(newPayment);
+            addPaymentToApartment(payment.getApartmentId(), addedPayment.getId());
+        }
     }
 }

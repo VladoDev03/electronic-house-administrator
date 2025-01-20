@@ -14,7 +14,6 @@ import org.example.service.contracts.BuildingService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 public class BuildingServiceImpl implements BuildingService {
     @Override
@@ -210,7 +209,7 @@ public class BuildingServiceImpl implements BuildingService {
                 }
             }
 
-            NewPaymentDto payment = new NewPaymentDto(total, apartment.getApartmentNumber());
+            NewPaymentDto payment = new NewPaymentDto(apartment.getId(), total, apartment.getApartmentNumber());
             newPayments.add(payment);
         }
 

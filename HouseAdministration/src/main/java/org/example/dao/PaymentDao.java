@@ -5,6 +5,8 @@ import org.example.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class PaymentDao {
     public static void createPayment(Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -38,6 +40,18 @@ public class PaymentDao {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.delete(payment);
+            transaction.commit();
+        }
+    }
+
+    public static void createMultiplePayments(List<Payment> payments) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            
+            for (Payment payment : payments) {
+                session.save(payment);
+            }
+
             transaction.commit();
         }
     }

@@ -29,7 +29,7 @@ public class Main {
         CompanyService companyService = new CompanyServiceImpl();
         ApartmentService apartmentService = new ApartmentServiceImpl();
         ServiceService serviceService = new ServiceServiceImpl();
-        PaymentService paymentService = new PaymentServiceImpl();
+        PaymentService paymentService = new PaymentServiceImpl(buildingService);
         ResidentService residentService = new ResidentServiceImpl();
 
         EmployeeDto employeeDto1 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
@@ -107,5 +107,7 @@ public class Main {
         buildingService.createPayments(buildingDto1.getId()).forEach(System.out::println);
 
         System.out.println(employeeService.getEmployeePayments(employeeDto1.getId()));
+
+        paymentService.addMultiplePaymentsToBuilding(buildingDto1.getId());
     }
 }

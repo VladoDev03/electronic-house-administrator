@@ -1,0 +1,70 @@
+package org.example.dto.Apartment;
+
+import org.example.dto.Resident.FullResidentInfoDto;
+
+import java.util.List;
+
+public class FullApartmentInfoDto {
+    private final int floor;
+    private final int apartmentNumber;
+    private final int area;
+    private final boolean hasPet;
+    private final List<FullResidentInfoDto> residents;
+    private final List<FullResidentInfoDto> owners;
+
+    public FullApartmentInfoDto(
+            int floor,
+            int apartmentNumber,
+            int area,
+            boolean hasPet,
+            List<FullResidentInfoDto> residents,
+            List<FullResidentInfoDto> owners
+    ) {
+        this.floor = floor;
+        this.apartmentNumber = apartmentNumber;
+        this.area = area;
+        this.hasPet = hasPet;
+        this.residents = residents;
+        this.owners = owners;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public boolean getHasPet() {
+        return hasPet;
+    }
+
+    public List<FullResidentInfoDto> getResidents() {
+        return residents;
+    }
+
+    public List<FullResidentInfoDto> getOwners() {
+        return owners;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\tFloor: ").append(floor).append(" ").append("\n");
+        sb.append("\tAparment Number: ").append(apartmentNumber).append("\n");
+        sb.append("\tArea: ").append(area).append("\n");
+        sb.append("\tHas Pet: ").append(hasPet).append("\n");
+        sb.append("\tResidents: ").append("\n");
+        residents.forEach(r -> sb.append(r.toString()).append("\n"));
+        sb.append("\tOwners: ").append("\n");
+        owners.forEach(o -> sb.append(o.toString()).append("\n"));
+
+        return sb.toString();
+    }
+}

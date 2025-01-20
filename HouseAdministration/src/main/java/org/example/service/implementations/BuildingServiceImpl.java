@@ -2,20 +2,16 @@ package org.example.service.implementations;
 
 import org.example.dao.BuildingDao;
 import org.example.dao.EmployeeDao;
-import org.example.dto.Building.BuildingDto;
-import org.example.dto.Building.BuildingResidentsDto;
-import org.example.dto.Building.CreateBuildingDto;
-import org.example.dto.Building.UpdateBuildingDto;
-import org.example.dto.Employee.EmployeeBuildingCountDto;
+import org.example.dto.Apartment.FullApartmentInfoDto;
+import org.example.dto.Building.*;
+import org.example.dto.Resident.FullResidentInfoDto;
 import org.example.dto.Resident.ResidentInBuildingDto;
 import org.example.entity.Building;
 import org.example.entity.Employee;
 import org.example.service.contracts.BuildingService;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BuildingServiceImpl implements BuildingService {
     @Override
@@ -98,6 +94,58 @@ public class BuildingServiceImpl implements BuildingService {
         );
 
         updateBuilding(updatedBuilding);
+    }
+
+    @Override
+    public FullBuildingInfoDto getBuildingWithApartmentsInfoWithResidentsInfo(long buildingId) {
+        Building building = BuildingDao.getBuildingWithApartmentsWithResidents(buildingId);
+
+        FullBuildingInfoDto result = new FullBuildingInfoDto(
+                building.getAddress(),
+                building.getFloors(),
+                building.getArea(),
+                building.getApartments()
+                        .stream()
+                        .map(a -> {
+                            FullApartmentInfoDto resultApartment = new FullApartmentInfoDto(
+                                    a.getFloor(),
+                                    a.getApartmentNumber(),
+                                    a.getArea(),
+                                    a.getHasPet(),
+                                    a.getResidents()
+                                            .stream()
+                                            .map(r -> {
+                                                FullResidentInfoDto resultResident = new FullResidentInfoDto(
+                                                        r.getFirstName(),
+                                                        r.getLastName(),
+                                                        r.getAge(),
+                                                        r.isUsesElevator()
+                                                );
+
+                                                return resultResident;
+                                            })
+                                            .toList(),
+                                    a.getOwners()
+                                            .stream()
+                                            .map(o -> {
+                                                FullResidentInfoDto resultOwner = new FullResidentInfoDto(
+                                                        o.getFirstName(),
+                                                        o.getLastName(),
+                                                        o.getAge(),
+                                                        o.isUsesElevator()
+                                                );
+
+                                                return resultOwner;
+                                            })
+                                            .toList()
+                            );
+
+                            return resultApartment;
+                        })
+                        .toList()
+        );
+
+        return result;
     }
 
     @Override

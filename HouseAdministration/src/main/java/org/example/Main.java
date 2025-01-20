@@ -96,5 +96,7 @@ public class Main {
         residentService.addResidentToApartment(residentDto8.getId(), apartmentDto3.getId());
 
         System.out.println(buildingService.getBuildingResidents(buildingDto1.getId()));
+
+        System.out.println(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
     }
 }

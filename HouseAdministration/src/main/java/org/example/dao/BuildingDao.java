@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Apartment;
 import org.example.entity.Building;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -42,6 +43,28 @@ public class BuildingDao {
             session.saveOrUpdate(building);
             transaction.commit();
         }
+    }
+
+    public static Building getBuildingWithApartmentsWithResidents(long buildingId) {
+        Building building;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            building = session.createQuery(
+                            "select distinct b from Building as b" +
+                                    " left join fetch b.apartments as a" +
+                                    " left join fetch a.residents" +
+                                    " left join fetch a.owners" +
+                                    " where b.id = :buildingId",
+                            Building.class)
+                    .setParameter("buildingId", buildingId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return building;
     }
 
     public static Building getBuildingWithResidents(long buildingId) {

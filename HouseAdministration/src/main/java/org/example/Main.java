@@ -24,6 +24,9 @@ public class Main {
     public static void main(String[] args) {
         SessionFactoryUtil.getSessionFactory().openSession();
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+
         BuildingService buildingService = new BuildingServiceImpl();
         EmployeeService employeeService = new EmployeeServiceImpl(buildingService);
         CompanyService companyService = new CompanyServiceImpl();
@@ -63,7 +66,7 @@ public class Main {
         BuildingDto buildingDto2 = buildingService.createBuilding(new CreateBuildingDto("What else", 10, 100, new HashSet<>(), null, null));
         BuildingDto buildingDto3 = buildingService.createBuilding(new CreateBuildingDto("Moon hut", 10, 100, new HashSet<>(), null, null));
         BuildingDto buildingDto4 = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower Twice", 10, 100, new HashSet<>(), null, null));
-        ApartmentDto apartmentDto2 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>(), null));
+        ApartmentDto apartmentDto2 = apartmentService.createApartment(new CreateApartmentDto(7, 19, 10, true, null, new HashSet<>(), new HashSet<>(), null));
         ServiceDto serviceDto2 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, null));
         PaymentDto paymentDto2 = paymentService.createPayment(new CreatePaymentDto(1200, null));
         ResidentDto residentDto4 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
@@ -87,27 +90,24 @@ public class Main {
         apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto4.getId());
         apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto5.getId());
 
-        System.out.println(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()));
-        System.out.println(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()).getEmployees().size());
-
-        ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, true, null, new HashSet<>(), new HashSet<>(), null));
+        ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 17, 10, true, null, new HashSet<>(), new HashSet<>(), null));
         ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 63, true, new HashSet<>(), null));
         ResidentDto residentDto8 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
         apartmentService.addApartmentToBuilding(apartmentDto3.getId(), buildingDto1.getId());
         residentService.addResidentToApartment(residentDto7.getId(), apartmentDto3.getId());
         residentService.addResidentToApartment(residentDto8.getId(), apartmentDto3.getId());
 
-        System.out.println(buildingService.getBuildingResidents(buildingDto1.getId()));
-
-        System.out.println(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
-
-        companyService.getCompaniesWithIncome().forEach(System.out::println);
-        System.out.println(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
-
-        buildingService.createPayments(buildingDto1.getId()).forEach(System.out::println);
-
-        System.out.println(employeeService.getEmployeePayments(employeeDto1.getId()));
-
         paymentService.addMultiplePaymentsToBuilding(buildingDto1.getId());
+
+        sb.append(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()));
+        sb.append(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()).getEmployees().size());
+        sb.append(buildingService.getBuildingResidents(buildingDto1.getId()));
+        sb.append(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
+        companyService.getCompaniesWithIncome().forEach(x -> sb.append(x.toString()));
+        sb.append(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
+        buildingService.createPayments(buildingDto1.getId()).forEach(x -> sb.append(x.toString()));
+        sb.append(employeeService.getEmployeePayments(employeeDto1.getId()));
+
+        System.out.println(sb.toString());
     }
 }

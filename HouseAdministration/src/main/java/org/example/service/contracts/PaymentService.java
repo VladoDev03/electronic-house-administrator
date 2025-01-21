@@ -1,7 +1,6 @@
 package org.example.service.contracts;
 
 import org.example.dto.Payment.CreatePaymentDto;
-import org.example.dto.Payment.NewPaymentDto;
 import org.example.dto.Payment.PaymentDto;
 import org.example.dto.Payment.UpdatePaymentDto;
 
@@ -15,4 +14,5 @@ public interface PaymentService {
     void addPaymentToApartment(long apartmentId, long paymentId);
     void createMultiplePayments(List<CreatePaymentDto> paymentDtos);
     void addMultiplePaymentsToBuilding(long buildingId);
+    void savePaymentToFile(long paymentId);
 }

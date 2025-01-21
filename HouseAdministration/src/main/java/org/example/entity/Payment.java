@@ -42,4 +42,20 @@ public class Payment extends BaseEntity {
     public Apartment getApartment() {
         return apartment;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Amount: ").append(getAmount()).append("\n");
+        sb.append("Payment Date: ").append(getPaymentDate()).append("\n");
+        sb.append("Apartment Number: ").append(getApartment().getApartmentNumber()).append("\n");
+        sb.append("Apartment Floor: ").append(getApartment().getFloor()).append("\n");
+        sb.append("Building Address: ").append(getApartment().getBuilding().getAddress()).append("\n");
+        sb.append("Employee Name: ").append(getApartment().getBuilding().getResponsibleEmployee().getFirstName());
+        sb.append(getApartment().getBuilding().getResponsibleEmployee().getLastName()).append("\n");
+        sb.append("Company Name: ").append(getApartment().getBuilding().getResponsibleEmployee().getCompany().getName()).append("\n");
+
+        return sb.toString();
+    }
 }

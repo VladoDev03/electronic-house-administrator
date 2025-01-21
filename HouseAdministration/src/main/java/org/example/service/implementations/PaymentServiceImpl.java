@@ -11,6 +11,10 @@ import org.example.entity.Payment;
 import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.PaymentService;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -85,6 +89,7 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
         updatePayment(updatePaymentDto);
+        savePaymentToFile(paymentId);
     }
 
     @Override
@@ -115,6 +120,30 @@ public class PaymentServiceImpl implements PaymentService {
 
             PaymentDto addedPayment = createPayment(newPayment);
             addPaymentToApartment(payment.getApartmentId(), addedPayment.getId());
+        }
+    }
+
+    @Override
+    public void savePaymentToFile(long paymentId) {
+        Payment payment = PaymentDao.getPaymentById(paymentId);
+
+        String folderName = "uploads";
+
+        File uploadsFolder = new File(folderName);
+
+        if (!uploadsFolder.exists()) {
+            uploadsFolder.mkdir();
+        }
+
+        String fileName = folderName + File.separator + String.valueOf(payment.getId()) + ".txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write("===== Payment Info =====");
+            writer.newLine();
+            writer.write("========================");
+            writer.newLine();
+            writer.write(payment.toString());
+        } catch (IOException ignored) {
         }
     }
 }

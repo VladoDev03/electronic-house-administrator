@@ -1,16 +1,21 @@
 package org.example.entity;
 
+//import jakarta.validation.constraints.Positive;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Apartment extends BaseEntity {
+//    @Positive
     private int floor;
 
     @Column(name = "apartment_number")
     private int apartmentNumber;
 
+//    @Positive
     private int area;
+
     private boolean hasPet;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package org.example.dao;
 
+//import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Company;
 import org.example.entity.Employee;
@@ -22,6 +23,7 @@ public class CompanyDao {
         return company;
     }
 
+//    public static void createCompany(@Valid Company company) {
     public static void createCompany(Company company) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();

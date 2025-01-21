@@ -1,5 +1,7 @@
 package org.example.entity;
 
+//import jakarta.validation.constraints.Positive;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -11,6 +13,7 @@ public class Person extends BaseEntity {
     @Column(name="last_name")
     private String lastName;
 
+//    @Positive
     private int age;
 
     public Person() {

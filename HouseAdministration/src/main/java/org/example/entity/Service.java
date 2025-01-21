@@ -1,20 +1,26 @@
 package org.example.entity;
 
+//import jakarta.validation.constraints.Positive;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Service extends BaseEntity {
+//    @Positive
     @Column(name = "price_area")
     private double priceArea;
 
+//    @Positive
     @Column(name = "price_resident")
     private double priceResident;
 
+//    @Positive
     @Column(name = "price_animal")
     private double priceAnimal;
 
+//    @Positive
     @Column(name = "price_elevator")
     private double priceElevator;
 

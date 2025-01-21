@@ -14,12 +14,18 @@ dependencies {
     implementation("org.hibernate:hibernate-core:5.6.15.Final")
     implementation("mysql:mysql-connector-java:8.0.28")
 
+//    Validation
+//    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+//    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+
 //    Logging
     implementation("org.apache.logging.log4j:log4j-core:2.17.1")
 
 //    Testing
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core:5.15.2")
+    testImplementation("com.h2database:h2:2.1.214")
 }
 
 tasks.test {

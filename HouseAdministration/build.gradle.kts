@@ -11,12 +11,12 @@ repositories {
 
 dependencies {
 //    Hibernate
-    implementation("org.hibernate:hibernate-core:5.6.15.Final")
-    implementation("mysql:mysql-connector-java:8.0.28")
+    implementation ("org.hibernate:hibernate-core:6.5.2.Final")
+    implementation ("mysql:mysql-connector-java:8.0.18")
 
 //    Validation
-//    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
-//    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
 
 //    Logging
     implementation("org.apache.logging.log4j:log4j-core:2.17.1")

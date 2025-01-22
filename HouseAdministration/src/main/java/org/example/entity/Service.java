@@ -2,9 +2,9 @@ package org.example.entity;
 
 //import jakarta.validation.constraints.Positive;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Service extends BaseEntity {

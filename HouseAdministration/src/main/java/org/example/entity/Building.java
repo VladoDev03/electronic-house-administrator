@@ -1,18 +1,18 @@
 package org.example.entity;
 
-//import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Building extends BaseEntity {
     private String address;
 
-//    @Positive
+    @Positive
     private int floors;
 
-//    @Positive
+    @Positive
     private double area;
 
     @OneToMany(mappedBy = "building")

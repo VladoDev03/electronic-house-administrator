@@ -1,19 +1,19 @@
 package org.example.entity;
 
-//import jakarta.validation.constraints.PastOrPresent;
-//import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
 public class Payment extends BaseEntity {
-//    @Positive
+    @Positive
     private double amount;
 
-//    @PastOrPresent(message = "Payment date cannot be in the future!")
+    @PastOrPresent(message = "Payment date cannot be in the future!")
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 

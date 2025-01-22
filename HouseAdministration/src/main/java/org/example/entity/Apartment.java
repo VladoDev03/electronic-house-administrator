@@ -1,19 +1,19 @@
 package org.example.entity;
 
-//import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Apartment extends BaseEntity {
-//    @Positive
+    @Positive
     private int floor;
 
     @Column(name = "apartment_number")
     private int apartmentNumber;
 
-//    @Positive
+    @Positive
     private int area;
 
     private boolean hasPet;

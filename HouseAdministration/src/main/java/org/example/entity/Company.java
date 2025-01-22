@@ -1,24 +1,24 @@
 package org.example.entity;
 
-//import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.PastOrPresent;
-//import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import org.example.validator.InvalidNames;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 public class Company extends BaseEntity {
-//    @NotBlank(message = "Company name cannot be blank!")
-//    @Size(max = 20, message = "Company name has to be with up to 20 characters!")
-//    @InvalidNames(message = "Company and Firm are not valid names!")
+    @NotBlank(message = "Company name cannot be blank!")
+    @Size(max = 20, message = "Company name has to be with up to 20 characters!")
+    @InvalidNames(message = "Company and Firm are not valid names!")
     private String name;
 
-//    @PastOrPresent(message = "Foundation date cannot be in the future!")
+    @PastOrPresent(message = "Foundation date cannot be in the future!")
     @Column(name = "foundation_date")
     private LocalDate foundationDate;
 

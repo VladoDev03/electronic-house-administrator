@@ -127,7 +127,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void savePaymentToFile(long paymentId) {
         Payment payment = PaymentDao.getPaymentById(paymentId);
 
-        String folderName = "uploads";
+        String folderName = "payments";
 
         File uploadsFolder = new File(folderName);
 

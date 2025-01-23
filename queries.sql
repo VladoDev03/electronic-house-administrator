@@ -11,6 +11,7 @@ SELECT * FROM employee;
 SELECT * FROM resident;
 SELECT * FROM service;
 SELECT * FROM payment;
+SELECT * FROM pet;
 SELECT * FROM apartment_owners;
 
 SET SQL_SAFE_UPDATES = 0;
@@ -21,6 +22,7 @@ DELETE FROM company;
 DELETE FROM apartment;
 DELETE FROM resident;
 DELETE FROM payment;
+DELETE FROM pet;
 DELETE FROM apartment_owners;
 SET SQL_SAFE_UPDATES = 1;
 

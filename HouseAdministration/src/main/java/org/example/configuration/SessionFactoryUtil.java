@@ -22,6 +22,7 @@ public class SessionFactoryUtil {
             configuration.addAnnotatedClass(Apartment.class);
             configuration.addAnnotatedClass(Building.class);
             configuration.addAnnotatedClass(Company.class);
+            configuration.addAnnotatedClass(Pet.class);
 
             configuration.addAnnotatedClass(Service.class);
             configuration.addAnnotatedClass(Payment.class);

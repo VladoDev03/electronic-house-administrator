@@ -22,6 +22,9 @@ public class Apartment extends BaseEntity {
     private Building building;
 
     @OneToMany(mappedBy = "apartment")
+    private Set<Pet> pets;
+
+    @OneToMany(mappedBy = "apartment")
     private Set<Resident> residents;
 
     @OneToMany(mappedBy = "apartment")

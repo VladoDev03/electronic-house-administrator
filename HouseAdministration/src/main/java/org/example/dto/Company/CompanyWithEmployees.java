@@ -27,6 +27,7 @@ public class CompanyWithEmployees {
 
         sb.append("Company Name: ").append(companyName).append("\n");
         employees.forEach(employee -> sb.append(employee).append("\n"));
+        sb.append("\n");
 
         return sb.toString();
     }

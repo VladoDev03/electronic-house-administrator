@@ -116,7 +116,6 @@ public class BuildingServiceImpl implements BuildingService {
                                     a.getFloor(),
                                     a.getApartmentNumber(),
                                     a.getArea(),
-                                    a.getHasPet(),
                                     a.getResidents()
                                             .stream()
                                             .map(r -> {
@@ -207,10 +206,6 @@ public class BuildingServiceImpl implements BuildingService {
 
         for (FullApartmentInfoDto apartment : buildingWithData.getApartments()) {
             double total = 0;
-
-            if (apartment.getHasPet()) {
-                total = total + service.getPriceAnimal();
-            }
 
             for (FullPetInfoDto pet : apartment.getPets()) {
                 if (pet.getUsesCommonArea()) {

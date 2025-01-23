@@ -1,6 +1,6 @@
 ===== Payment Info =====
 ========================
-Amount: 1149.0
+Amount: 1114.0
 Payment Date: 2025-01-23
 Apartment Number: 17
 Apartment Floor: 7

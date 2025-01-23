@@ -16,4 +16,9 @@ public class FullPetInfoDto {
     public boolean getUsesCommonArea() {
         return usesCommonArea;
     }
+
+    @Override
+    public String toString() {
+        return "\tUses common area: " + usesCommonArea;
+    }
 }

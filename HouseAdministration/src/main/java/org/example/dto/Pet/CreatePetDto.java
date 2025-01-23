@@ -1,6 +1,5 @@
 package org.example.dto.Pet;
 
-import jakarta.persistence.ManyToOne;
 import org.example.entity.Apartment;
 
 public class CreatePetDto {

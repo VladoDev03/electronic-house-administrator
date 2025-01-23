@@ -10,7 +10,6 @@ public class FullApartmentInfoDto {
     private final int floor;
     private final int apartmentNumber;
     private final int area;
-    private final boolean hasPet;
     private final List<FullResidentInfoDto> residents;
     private final List<FullResidentInfoDto> owners;
     private final List<FullPetInfoDto> pets;
@@ -19,7 +18,6 @@ public class FullApartmentInfoDto {
             int floor,
             int apartmentNumber,
             int area,
-            boolean hasPet,
             List<FullResidentInfoDto> residents,
             List<FullResidentInfoDto> owners,
             List<FullPetInfoDto> pets
@@ -27,7 +25,6 @@ public class FullApartmentInfoDto {
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
         this.area = area;
-        this.hasPet = hasPet;
         this.residents = residents;
         this.owners = owners;
         this.pets = pets;
@@ -38,12 +35,11 @@ public class FullApartmentInfoDto {
             int floor,
             int apartmentNumber,
             int area,
-            boolean hasPet,
             List<FullResidentInfoDto> residents,
             List<FullResidentInfoDto> owners,
             List<FullPetInfoDto> pets
     ) {
-        this(floor, apartmentNumber, area, hasPet, residents, owners, pets);
+        this(floor, apartmentNumber, area, residents, owners, pets);
         this.id = id;
     }
 
@@ -61,10 +57,6 @@ public class FullApartmentInfoDto {
 
     public int getArea() {
         return area;
-    }
-
-    public boolean getHasPet() {
-        return hasPet;
     }
 
     public List<FullResidentInfoDto> getResidents() {
@@ -86,7 +78,6 @@ public class FullApartmentInfoDto {
         sb.append("\tFloor: ").append(floor).append(" ").append("\n");
         sb.append("\tAparment Number: ").append(apartmentNumber).append("\n");
         sb.append("\tArea: ").append(area).append("\n");
-        sb.append("\tHas Pet: ").append(hasPet).append("\n");
         sb.append("\tResidents: ").append("\n");
         residents.forEach(r -> sb.append(r.toString()).append("\n"));
         sb.append("\tOwners: ").append("\n");

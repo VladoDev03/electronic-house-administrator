@@ -11,18 +11,16 @@ public class ApartmentDto {
     private final int floor;
     private final int apartmentNumber;
     private final int area;
-    private final boolean hasPet;
     private final Building building;
     private final Set<Resident> residents;
     private final Set<Resident> owners;
     private final Set<Payment> payments;
 
-    public ApartmentDto(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Resident> owners, Set<Payment> payments) {
+    public ApartmentDto(long id, int floor, int apartmentNumber, int area, Building building, Set<Resident> residents, Set<Resident> owners, Set<Payment> payments) {
         this.id = id;
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
         this.area = area;
-        this.hasPet = hasPet;
         this.building = building;
         this.residents = residents;
         this.owners = owners;
@@ -43,10 +41,6 @@ public class ApartmentDto {
 
     public int getArea() {
         return area;
-    }
-
-    public boolean getHasPet() {
-        return hasPet;
     }
 
     public Building getBuilding() {

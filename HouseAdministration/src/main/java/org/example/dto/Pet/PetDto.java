@@ -17,7 +17,7 @@ public class PetDto {
         return id;
     }
 
-    public boolean isUsesCommonArea() {
+    public boolean getUsesCommonArea() {
         return usesCommonArea;
     }
 

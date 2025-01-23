@@ -16,8 +16,6 @@ public class Apartment extends BaseEntity {
     @Positive
     private int area;
 
-    private boolean hasPet;
-
     @ManyToOne
     private Building building;
 
@@ -41,24 +39,24 @@ public class Apartment extends BaseEntity {
     public Apartment() {
     }
 
-    public Apartment(int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
+    public Apartment(int floor, int apartmentNumber, int area, Building building, Set<Pet> pets, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
         this.area = area;
-        this.hasPet = hasPet;
         this.building = building;
+        this.pets = pets;
         this.residents = residents;
         this.payments = payments;
         this.owners = owners;
     }
 
-    public Apartment(long id, int floor, int apartmentNumber, int area, boolean hasPet, Building building, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
+    public Apartment(long id, int floor, int apartmentNumber, int area, Building building, Set<Pet> pets, Set<Resident> residents, Set<Payment> payments, Set<Resident> owners) {
         super(id);
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
         this.area = area;
-        this.hasPet = hasPet;
         this.building = building;
+        this.pets = pets;
         this.residents = residents;
         this.payments = payments;
         this.owners = owners;
@@ -74,10 +72,6 @@ public class Apartment extends BaseEntity {
 
     public int getArea() {
         return area;
-    }
-
-    public boolean getHasPet() {
-        return hasPet;
     }
 
     public Building getBuilding() {

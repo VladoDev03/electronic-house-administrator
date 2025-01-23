@@ -1,9 +1,11 @@
 package org.example.service.implementations;
 
+import org.example.dao.ApartmentDao;
 import org.example.dao.PetDao;
 import org.example.dto.Pet.CreatePetDto;
 import org.example.dto.Pet.PetDto;
 import org.example.dto.Pet.UpdatePetDto;
+import org.example.entity.Apartment;
 import org.example.entity.Pet;
 import org.example.service.contracts.PetService;
 
@@ -54,5 +56,19 @@ public class PetServiceImpl implements PetService {
     public void deletePet(long petId) {
         Pet pet = PetDao.getPetById(petId);
         PetDao.deletePet(pet);
+    }
+
+    @Override
+    public void addPetToApartment(long apartmentId, long petId) {
+        Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
+        Pet pet = PetDao.getPetById(petId);
+
+        UpdatePetDto updatePetDto = new UpdatePetDto(
+                pet.getId(),
+                pet.getUsesCommonArea(),
+                apartment
+        );
+
+        updatePet(updatePetDto);
     }
 }

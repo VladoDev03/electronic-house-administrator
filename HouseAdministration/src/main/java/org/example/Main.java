@@ -111,6 +111,8 @@ public class Main {
         companyService.getCompaniesWithIncome().forEach(x -> sb.append(x.toString()));
         sb.append(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
         buildingService.createPayments(buildingDto1.getId()).forEach(x -> sb.append(x.toString()));
+        petService.addPetToApartment(apartmentDto1.getId(), petDto1.getId());
+        petService.addPetToApartment(apartmentDto1.getId(), petDto2.getId());
         sb.append(employeeService.getEmployeePayments(employeeDto1.getId()));
 
         System.out.println(sb.toString());

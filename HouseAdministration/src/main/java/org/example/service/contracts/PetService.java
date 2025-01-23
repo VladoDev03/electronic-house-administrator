@@ -9,4 +9,5 @@ public interface PetService {
     PetDto createPet(CreatePetDto petDto);
     void updatePet(UpdatePetDto petDto);
     void deletePet(long petId);
+    void addPetToApartment(long apartmentId, long petId);
 }

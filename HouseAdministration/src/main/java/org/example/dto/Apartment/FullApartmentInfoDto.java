@@ -1,5 +1,6 @@
 package org.example.dto.Apartment;
 
+import org.example.dto.Pet.FullPetInfoDto;
 import org.example.dto.Resident.FullResidentInfoDto;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class FullApartmentInfoDto {
     private final boolean hasPet;
     private final List<FullResidentInfoDto> residents;
     private final List<FullResidentInfoDto> owners;
+    private final List<FullPetInfoDto> pets;
 
     public FullApartmentInfoDto(
             int floor,
@@ -19,7 +21,8 @@ public class FullApartmentInfoDto {
             int area,
             boolean hasPet,
             List<FullResidentInfoDto> residents,
-            List<FullResidentInfoDto> owners
+            List<FullResidentInfoDto> owners,
+            List<FullPetInfoDto> pets
     ) {
         this.floor = floor;
         this.apartmentNumber = apartmentNumber;
@@ -27,6 +30,7 @@ public class FullApartmentInfoDto {
         this.hasPet = hasPet;
         this.residents = residents;
         this.owners = owners;
+        this.pets = pets;
     }
 
     public FullApartmentInfoDto(
@@ -36,9 +40,10 @@ public class FullApartmentInfoDto {
             int area,
             boolean hasPet,
             List<FullResidentInfoDto> residents,
-            List<FullResidentInfoDto> owners
+            List<FullResidentInfoDto> owners,
+            List<FullPetInfoDto> pets
     ) {
-        this(floor, apartmentNumber, area, hasPet, residents, owners);
+        this(floor, apartmentNumber, area, hasPet, residents, owners, pets);
         this.id = id;
     }
 
@@ -70,6 +75,10 @@ public class FullApartmentInfoDto {
         return owners;
     }
 
+    public List<FullPetInfoDto> getPets() {
+        return pets;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -82,6 +91,8 @@ public class FullApartmentInfoDto {
         residents.forEach(r -> sb.append(r.toString()).append("\n"));
         sb.append("\tOwners: ").append("\n");
         owners.forEach(o -> sb.append(o.toString()).append("\n"));
+        sb.append("\tPets: ").append("\n");
+        pets.forEach(p -> sb.append(p.toString()).append("\n"));
 
         return sb.toString();
     }

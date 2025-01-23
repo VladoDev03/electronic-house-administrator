@@ -7,14 +7,16 @@ public class CreateServiceDto {
     private final double priceResident;
     private final double priceAnimal;
     private final double priceElevator;
+    private final double priceAnimalCommonArea;
     private final Building building;
 
-    public CreateServiceDto(double priceArea, double priceResident, double priceAnimal, double priceElevator, Building building) {
+    public CreateServiceDto(double priceArea, double priceResident, double priceAnimal, double priceAnimalCommonArea, double priceElevator, Building building) {
         this.priceArea = priceArea;
         this.priceResident = priceResident;
         this.priceAnimal = priceAnimal;
         this.priceElevator = priceElevator;
         this.building = building;
+        this.priceAnimalCommonArea = priceAnimalCommonArea;
     }
 
     public double getPriceArea() {
@@ -35,5 +37,9 @@ public class CreateServiceDto {
 
     public Building getBuilding() {
         return building;
+    }
+
+    public double getPriceAnimalCommonArea() {
+        return priceAnimalCommonArea;
     }
 }

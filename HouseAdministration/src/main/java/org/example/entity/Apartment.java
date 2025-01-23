@@ -95,4 +95,8 @@ public class Apartment extends BaseEntity {
     public Set<Payment> getPayments() {
         return payments;
     }
+
+    public Set<Pet> getPets() {
+        return pets;
+    }
 }

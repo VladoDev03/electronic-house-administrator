@@ -1,10 +1,12 @@
 package org.example.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pet extends BaseEntity {
+    @Column(name = "uses_common_area")
     private boolean usesCommonArea;
 
     @ManyToOne

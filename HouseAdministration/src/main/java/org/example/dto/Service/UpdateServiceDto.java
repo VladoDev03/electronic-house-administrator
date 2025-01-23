@@ -8,15 +8,17 @@ public class UpdateServiceDto {
     private final double priceResident;
     private final double priceAnimal;
     private final double priceElevator;
+    private final double priceAnimalCommonArea;
     private final Building building;
 
-    public UpdateServiceDto(long id, double priceArea, double priceResident, double priceAnimal, double priceElevator, Building building) {
+    public UpdateServiceDto(long id, double priceArea, double priceResident, double priceAnimal, double priceAnimalCommonArea, double priceElevator, Building building) {
         this.id = id;
         this.priceArea = priceArea;
         this.priceResident = priceResident;
         this.priceAnimal = priceAnimal;
         this.priceElevator = priceElevator;
         this.building = building;
+        this.priceAnimalCommonArea = priceAnimalCommonArea;
     }
 
     public long getId() {
@@ -41,5 +43,9 @@ public class UpdateServiceDto {
 
     public Building getBuilding() {
         return building;
+    }
+
+    public double getPriceAnimalCommonArea() {
+        return priceAnimalCommonArea;
     }
 }

@@ -54,6 +54,7 @@ public class BuildingDao {
                                     " left join fetch b.service as s" +
                                     " left join fetch a.residents as r" +
                                     " left join fetch a.owners as o" +
+                                    " left join fetch a.pets as p" +
                                     " where b.id = :buildingId",
                             Building.class)
                     .setParameter("buildingId", buildingId)

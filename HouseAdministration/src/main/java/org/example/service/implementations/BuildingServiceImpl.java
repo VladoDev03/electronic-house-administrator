@@ -5,6 +5,7 @@ import org.example.dao.EmployeeDao;
 import org.example.dto.Apartment.FullApartmentInfoDto;
 import org.example.dto.Building.*;
 import org.example.dto.Payment.NewPaymentDto;
+import org.example.dto.Pet.FullPetInfoDto;
 import org.example.dto.Resident.FullResidentInfoDto;
 import org.example.dto.Resident.ResidentInBuildingDto;
 import org.example.dto.Service.ServiceInfoDto;
@@ -141,6 +142,17 @@ public class BuildingServiceImpl implements BuildingService {
 
                                                 return resultOwner;
                                             })
+                                            .toList(),
+                                    a.getPets()
+                                            .stream()
+                                            .map(p -> {
+                                                FullPetInfoDto resultPet = new FullPetInfoDto(
+                                                        p.getId(),
+                                                        p.getUsesCommonArea()
+                                                );
+
+                                                return resultPet;
+                                            })
                                             .toList()
                             );
 
@@ -189,7 +201,8 @@ public class BuildingServiceImpl implements BuildingService {
                 buildingWithService.getService().getPriceArea(),
                 buildingWithService.getService().getPriceResident(),
                 buildingWithService.getService().getPriceAnimal(),
-                buildingWithService.getService().getPriceElevator()
+                buildingWithService.getService().getPriceElevator(),
+                buildingWithService.getService().getPriceAnimalCommonArea()
         );
 
         for (FullApartmentInfoDto apartment : buildingWithData.getApartments()) {
@@ -197,6 +210,14 @@ public class BuildingServiceImpl implements BuildingService {
 
             if (apartment.getHasPet()) {
                 total = total + service.getPriceAnimal();
+            }
+
+            for (FullPetInfoDto pet : apartment.getPets()) {
+                if (pet.getUsesCommonArea()) {
+                    total = total + service.getPriceAnimalCommonArea();
+                } else {
+                    total = total + service.getPriceAnimal();
+                }
             }
 
             total = total + apartment.getArea() * service.getPriceArea();

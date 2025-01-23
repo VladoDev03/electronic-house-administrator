@@ -19,6 +19,7 @@ public class ServiceServiceImpl implements ServiceService {
                 service.getPriceArea(),
                 service.getPriceResident(),
                 service.getPriceAnimal(),
+                service.getPriceAnimalCommonArea(),
                 service.getPriceElevator(),
                 service.getBuilding()
         );
@@ -32,6 +33,7 @@ public class ServiceServiceImpl implements ServiceService {
                 serviceDto.getPriceArea(),
                 serviceDto.getPriceResident(),
                 serviceDto.getPriceAnimal(),
+                serviceDto.getPriceAnimalCommonArea(),
                 serviceDto.getPriceElevator(),
                 serviceDto.getBuilding()
         );
@@ -43,6 +45,7 @@ public class ServiceServiceImpl implements ServiceService {
                 service.getPriceArea(),
                 service.getPriceResident(),
                 service.getPriceAnimal(),
+                service.getPriceAnimalCommonArea(),
                 service.getPriceElevator(),
                 service.getBuilding()
         );
@@ -57,6 +60,7 @@ public class ServiceServiceImpl implements ServiceService {
                 serviceDto.getPriceArea(),
                 serviceDto.getPriceResident(),
                 serviceDto.getPriceAnimal(),
+                serviceDto.getPriceAnimalCommonArea(),
                 serviceDto.getPriceElevator(),
                 serviceDto.getBuilding()
         );
@@ -79,6 +83,7 @@ public class ServiceServiceImpl implements ServiceService {
                 service.getPriceArea(),
                 service.getPriceResident(),
                 service.getPriceAnimal(),
+                service.getPriceAnimalCommonArea(),
                 service.getPriceElevator(),
                 building
         );

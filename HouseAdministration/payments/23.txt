@@ -1,0 +1,9 @@
+===== Payment Info =====
+========================
+Amount: 1200.0
+Payment Date: 2025-01-23
+Apartment Number: 19
+Apartment Floor: 7
+Building Address: What else
+Employee Name: JohnDoe
+Company Name: House Administrator

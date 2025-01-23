@@ -11,6 +11,8 @@ import org.example.dto.Employee.CreateEmployeeDto;
 import org.example.dto.Employee.EmployeeDto;
 import org.example.dto.Payment.CreatePaymentDto;
 import org.example.dto.Payment.PaymentDto;
+import org.example.dto.Pet.CreatePetDto;
+import org.example.dto.Pet.PetDto;
 import org.example.dto.Resident.CreateResidentDto;
 import org.example.dto.Resident.ResidentDto;
 import org.example.dto.Service.CreateServiceDto;
@@ -34,6 +36,7 @@ public class Main {
         ServiceService serviceService = new ServiceServiceImpl();
         PaymentService paymentService = new PaymentServiceImpl(buildingService);
         ResidentService residentService = new ResidentServiceImpl();
+        PetService petService = new PetServiceImpl();
 
         EmployeeDto employeeDto1 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
         CompanyDto companyDto1 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
@@ -42,6 +45,8 @@ public class Main {
         ServiceDto serviceDto1 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, null));
         PaymentDto paymentDto1 = paymentService.createPayment(new CreatePaymentDto(1500, null));
         PaymentDto paymentDto3 = paymentService.createPayment(new CreatePaymentDto(1700, null));
+        PetDto petDto1 = petService.createPet(new CreatePetDto(true, null));
+        PetDto petDto2 = petService.createPet(new CreatePetDto(false, null));
         ResidentDto residentDto1 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
         ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 48, true, new HashSet<>(), null));
         ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));

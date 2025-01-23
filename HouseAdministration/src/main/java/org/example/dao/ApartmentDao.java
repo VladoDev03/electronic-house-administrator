@@ -9,7 +9,7 @@ public class ApartmentDao {
     public static void createApartment(Apartment apartment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(apartment);
+            session.persist(apartment);
             transaction.commit();
         }
     }
@@ -29,7 +29,7 @@ public class ApartmentDao {
     public static void updateApartment(Apartment apartment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(apartment);
+            session.merge(apartment);
             transaction.commit();
         }
     }
@@ -37,7 +37,7 @@ public class ApartmentDao {
     public static void deleteApartment(Apartment apartment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(apartment);
+            session.remove(apartment);
             transaction.commit();
         }
     }

@@ -8,6 +8,7 @@ import org.example.dto.Employee.FullEmployeeWithBuildingsInfoDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
 import org.example.entity.Payment;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.CompanyService;
 
 import java.util.Comparator;
@@ -25,13 +26,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void deleteCompany(long companyId) {
+    public void deleteCompany(long companyId) throws EntityNotFoundException {
         Company company = CompanyDao.getCompanyById(companyId);
         CompanyDao.deleteCompany(company);
     }
 
     @Override
-    public CompanyDto getCompanyById(long companyId) {
+    public CompanyDto getCompanyById(long companyId) throws EntityNotFoundException {
         Company company = CompanyDao.getCompanyById(companyId);
         return new CompanyDto(company.getId(), company.getName(), company.getFoundationDate(), company.getEmployees());
     }
@@ -43,14 +44,14 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Set<Employee> getCompanyEmployees(long id) {
+    public Set<Employee> getCompanyEmployees(long id) throws EntityNotFoundException {
         Set<Employee> employees = CompanyDao.getCompanyEmployees(id);
 
         return employees;
     }
 
     @Override
-    public FullCompanyInfoDto getCompanyEmployeesWithBuildingsInfo(long companyId) {
+    public FullCompanyInfoDto getCompanyEmployeesWithBuildingsInfo(long companyId) throws EntityNotFoundException {
         Company company = CompanyDao.getCompanyWithEmployeesWithBuildings(companyId);
 
         FullCompanyInfoDto result = new FullCompanyInfoDto(
@@ -82,7 +83,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId) {
+    public CompanyWithEmployees getCompanyEmployeesWithBuildingCount(long companyId) throws EntityNotFoundException {
         Company company = CompanyDao.getCompanyWithEmployeesWithBuildings(companyId);
 
         CompanyWithEmployees result = new CompanyWithEmployees(

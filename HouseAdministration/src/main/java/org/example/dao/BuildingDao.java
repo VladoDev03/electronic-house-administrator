@@ -3,17 +3,22 @@ package org.example.dao;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Building;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class BuildingDao {
-    public static Building getBuildingById(long id) {
+    public static Building getBuildingById(long id) throws EntityNotFoundException {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             building = session.get(Building.class, id);
             transaction.commit();
+        }
+
+        if (building == null) {
+            throw new EntityNotFoundException(id);
         }
 
         return building;
@@ -43,7 +48,7 @@ public class BuildingDao {
         }
     }
 
-    public static Building getBuildingWithApartmentsWithResidentsWithService(long buildingId) {
+    public static Building getBuildingWithApartmentsWithResidentsWithService(long buildingId) throws EntityNotFoundException {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -64,10 +69,14 @@ public class BuildingDao {
             transaction.commit();
         }
 
+        if (building == null) {
+            throw new EntityNotFoundException(buildingId);
+        }
+
         return building;
     }
 
-    public static Building getBuildingWithResidents(long buildingId) {
+    public static Building getBuildingWithResidents(long buildingId) throws EntityNotFoundException {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -86,10 +95,14 @@ public class BuildingDao {
             transaction.commit();
         }
 
+        if (building == null) {
+            throw new EntityNotFoundException(buildingId);
+        }
+
         return building;
     }
 
-    public static Building getBuildingWithServices(long buildingId) {
+    public static Building getBuildingWithServices(long buildingId) throws EntityNotFoundException {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -105,6 +118,10 @@ public class BuildingDao {
                     .getSingleResult();
 
             transaction.commit();
+        }
+
+        if (building == null) {
+            throw new EntityNotFoundException(buildingId);
         }
 
         return building;

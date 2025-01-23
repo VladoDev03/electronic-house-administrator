@@ -3,17 +3,22 @@ package org.example.dao;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class EmployeeDao {
-    public static Employee getEmployeeById(long id) {
+    public static Employee getEmployeeById(long id) throws EntityNotFoundException {
         Employee employee;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             employee = session.get(Employee.class, id);
             transaction.commit();
+        }
+
+        if (employee == null) {
+            throw new EntityNotFoundException(id);
         }
 
         return employee;
@@ -43,7 +48,7 @@ public class EmployeeDao {
         }
     }
 
-    public static Employee getEmployeeWithBuildings(long employeeId) {
+    public static Employee getEmployeeWithBuildings(long employeeId) throws EntityNotFoundException {
         Employee employee;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -58,6 +63,10 @@ public class EmployeeDao {
                     .getSingleResult();
 
             transaction.commit();
+        }
+
+        if (employee == null) {
+            throw new EntityNotFoundException(employeeId);
         }
 
         return employee;

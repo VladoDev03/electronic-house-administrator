@@ -7,11 +7,13 @@ import org.example.dto.Pet.PetDto;
 import org.example.dto.Pet.UpdatePetDto;
 import org.example.entity.Apartment;
 import org.example.entity.Pet;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.PetService;
 
 public class PetServiceImpl implements PetService {
     @Override
-    public PetDto getPetById(long petId) {
+    public PetDto getPetById(long petId) throws EntityNotFoundException {
         Pet pet = PetDao.getPetById(petId);
 
         PetDto result = new PetDto(
@@ -53,15 +55,19 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void deletePet(long petId) {
+    public void deletePet(long petId) throws EntityNotFoundException {
         Pet pet = PetDao.getPetById(petId);
         PetDao.deletePet(pet);
     }
 
     @Override
-    public void addPetToApartment(long apartmentId, long petId) {
+    public void addPetToApartment(long apartmentId, long petId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
         Pet pet = PetDao.getPetById(petId);
+
+        if (pet.getApartment() != null && pet.getApartment().getId() == apartment.getId()) {
+            throw new EntitiesAlreadyRelatedException(apartmentId, petId);
+        }
 
         UpdatePetDto updatePetDto = new UpdatePetDto(
                 pet.getId(),

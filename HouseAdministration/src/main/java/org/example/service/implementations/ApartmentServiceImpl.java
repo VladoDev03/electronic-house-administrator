@@ -9,11 +9,13 @@ import org.example.dto.Apartment.UpdateApartmentDto;
 import org.example.entity.Apartment;
 import org.example.entity.Building;
 import org.example.entity.Resident;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.ApartmentService;
 
 public class ApartmentServiceImpl implements ApartmentService {
     @Override
-    public ApartmentDto getApartmentById(long apartmentId) {
+    public ApartmentDto getApartmentById(long apartmentId) throws EntityNotFoundException {
         Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
 
         ApartmentDto apartmentDto = new ApartmentDto(
@@ -60,7 +62,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void deleteApartment(long apartmentId) {
+    public void deleteApartment(long apartmentId) throws EntityNotFoundException {
         Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
         ApartmentDao.deleteApartment(apartment);
     }
@@ -83,9 +85,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void addApartmentToBuilding(long apartmentId, long buildingId) {
+    public void addApartmentToBuilding(long apartmentId, long buildingId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
         Building building = BuildingDao.getBuildingById(buildingId);
+
+        if (apartment.getBuilding() != null && apartment.getBuilding().getId() == building.getId()) {
+            throw new EntitiesAlreadyRelatedException(apartmentId, buildingId);
+        }
 
         UpdateApartmentDto apartmentDto = new UpdateApartmentDto(
                 apartment.getId(),
@@ -103,9 +109,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void setApartmentOwner(long apartmentId, long ownerId) {
+    public void setApartmentOwner(long apartmentId, long ownerId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Apartment apartment = ApartmentDao.getApartmentWithOwners(apartmentId);
         Resident owner = ResidentDao.getResidentById(ownerId);
+
+        if (apartment.getOwners().stream().anyMatch(o -> o.getId() == ownerId)) {
+            throw new EntitiesAlreadyRelatedException(apartmentId, ownerId);
+        }
 
         apartment.getOwners().add(owner);
 
@@ -125,9 +135,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void addResidentToApartment(long apartmentId, long residentId) {
+    public void addResidentToApartment(long apartmentId, long residentId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Apartment apartment = ApartmentDao.getApartmentWithResidents(apartmentId);
         Resident resident = ResidentDao.getResidentById(residentId);
+
+        if (apartment.getResidents().stream().anyMatch(r -> r.getId() == residentId)) {
+            throw new EntitiesAlreadyRelatedException(apartmentId, residentId);
+        }
 
         apartment.getResidents().add(resident);
 

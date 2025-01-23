@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Pet;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -15,13 +16,17 @@ public class PetDao {
         }
     }
 
-    public static Pet getPetById(long petId) {
+    public static Pet getPetById(long petId) throws EntityNotFoundException {
         Pet pet;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             pet = session.get(Pet.class, petId);
             transaction.commit();
+        }
+
+        if (pet == null) {
+            throw new EntityNotFoundException(petId);
         }
 
         return pet;

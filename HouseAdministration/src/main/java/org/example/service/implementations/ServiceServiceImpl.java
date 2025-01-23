@@ -7,11 +7,13 @@ import org.example.dto.Service.ServiceDto;
 import org.example.dto.Service.UpdateServiceDto;
 import org.example.entity.Building;
 import org.example.entity.Service;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.ServiceService;
 
 public class ServiceServiceImpl implements ServiceService {
     @Override
-    public ServiceDto getServiceById(int id) {
+    public ServiceDto getServiceById(int id) throws EntityNotFoundException {
         Service service = ServiceDao.getServiceById(id);
 
         ServiceDto result = new ServiceDto(
@@ -69,14 +71,18 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public void deleteService(long id) {
+    public void deleteService(long id) throws EntityNotFoundException {
         Service service = ServiceDao.getServiceById(id);
         ServiceDao.deleteService(service);
     }
 
-    public void setServiceToBuilding(long serviceId, long buildingId) {
+    public void setServiceToBuilding(long serviceId, long buildingId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Service service = ServiceDao.getServiceById(serviceId);
         Building building = BuildingDao.getBuildingById(buildingId);
+
+        if (service.getBuilding() != null && service.getBuilding().getId() == building.getId()) {
+            throw new EntitiesAlreadyRelatedException(serviceId, buildingId);
+        }
 
         UpdateServiceDto serviceDto = new UpdateServiceDto(
                 service.getId(),

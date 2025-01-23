@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Apartment;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -15,13 +16,17 @@ public class ApartmentDao {
         }
     }
 
-    public static Apartment getApartmentById(long apartmentId) {
+    public static Apartment getApartmentById(long apartmentId) throws EntityNotFoundException {
         Apartment apartment;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             apartment = session.get(Apartment.class, apartmentId);
             transaction.commit();
+        }
+
+        if (apartment == null) {
+            throw new EntityNotFoundException(apartmentId);
         }
 
         return apartment;
@@ -43,7 +48,7 @@ public class ApartmentDao {
         }
     }
 
-    public static Apartment getApartmentWithOwners(long apartmentId) {
+    public static Apartment getApartmentWithOwners(long apartmentId) throws EntityNotFoundException {
         Apartment apartment;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -60,10 +65,14 @@ public class ApartmentDao {
             transaction.commit();
         }
 
+        if (apartment == null) {
+            throw new EntityNotFoundException(apartmentId);
+        }
+
         return apartment;
     }
 
-    public static Apartment getApartmentWithResidents(long apartmentId) {
+    public static Apartment getApartmentWithResidents(long apartmentId) throws EntityNotFoundException {
         Apartment apartment;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -78,6 +87,10 @@ public class ApartmentDao {
                     .getSingleResult();
 
             transaction.commit();
+        }
+
+        if (apartment == null) {
+            throw new EntityNotFoundException(apartmentId);
         }
 
         return apartment;

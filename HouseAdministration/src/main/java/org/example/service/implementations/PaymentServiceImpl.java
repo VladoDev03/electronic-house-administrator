@@ -8,6 +8,8 @@ import org.example.dto.Payment.PaymentDto;
 import org.example.dto.Payment.UpdatePaymentDto;
 import org.example.entity.Apartment;
 import org.example.entity.Payment;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.PaymentService;
 
@@ -25,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentDto getPaymentById(long paymentId) {
+    public PaymentDto getPaymentById(long paymentId) throws EntityNotFoundException {
         Payment payment = PaymentDao.getPaymentById(paymentId);
 
         PaymentDto result = new PaymentDto(
@@ -71,15 +73,19 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void deletePayment(long paymentId) {
+    public void deletePayment(long paymentId) throws EntityNotFoundException {
         Payment payment = PaymentDao.getPaymentById(paymentId);
         PaymentDao.deletePayment(payment);
     }
 
     @Override
-    public void addPaymentToApartment(long apartmentId, long paymentId) {
+    public void addPaymentToApartment(long apartmentId, long paymentId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Payment payment = PaymentDao.getPaymentById(paymentId);
         Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
+
+        if (payment.getApartment() != null && payment.getApartment().getId() == apartmentId) {
+            throw new EntitiesAlreadyRelatedException(apartmentId, paymentId);
+        }
 
         UpdatePaymentDto updatePaymentDto = new UpdatePaymentDto(
                 payment.getId(),
@@ -111,7 +117,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void addMultiplePaymentsToBuilding(long buildingId) {
+    public void addMultiplePaymentsToBuilding(long buildingId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         for (NewPaymentDto payment : buildingService.createPayments(buildingId)) {
             CreatePaymentDto newPayment = new CreatePaymentDto(
                     payment.getAmount(),
@@ -124,7 +130,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void savePaymentToFile(long paymentId) {
+    public void savePaymentToFile(long paymentId) throws EntityNotFoundException {
         Payment payment = PaymentDao.getPaymentById(paymentId);
 
         String folderName = "payments";

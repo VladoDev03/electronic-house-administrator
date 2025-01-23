@@ -10,6 +10,8 @@ import org.example.dto.Resident.FullResidentInfoDto;
 import org.example.dto.Resident.ResidentInBuildingDto;
 import org.example.dto.Service.ServiceInfoDto;
 import org.example.entity.*;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.BuildingService;
 
 import java.util.ArrayList;
@@ -44,13 +46,13 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void deleteBuilding(long buildingId) {
+    public void deleteBuilding(long buildingId) throws EntityNotFoundException {
         Building building = BuildingDao.getBuildingById(buildingId);
         BuildingDao.deleteBuilding(building);
     }
 
     @Override
-    public BuildingDto getBuildingById(long buildingId) {
+    public BuildingDto getBuildingById(long buildingId) throws EntityNotFoundException {
         Building building = BuildingDao.getBuildingById(buildingId);
 
         BuildingDto result = new BuildingDto(
@@ -82,9 +84,13 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void assignBuildingToEmployee(long employeeId, long buildingId) {
+    public void assignBuildingToEmployee(long employeeId, long buildingId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Employee employee = EmployeeDao.getEmployeeById(employeeId);
         Building building = BuildingDao.getBuildingById(buildingId);
+
+        if (building.getResponsibleEmployee() != null && building.getResponsibleEmployee().getId() == employee.getId()) {
+            throw new EntitiesAlreadyRelatedException(employeeId, buildingId);
+        }
 
         UpdateBuildingDto updatedBuilding = new UpdateBuildingDto(
                 building.getId(),
@@ -100,7 +106,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public FullBuildingInfoDto getBuildingWithApartmentsInfoWithResidentsInfo(long buildingId) {
+    public FullBuildingInfoDto getBuildingWithApartmentsInfoWithResidentsInfo(long buildingId) throws EntityNotFoundException {
         Building building = BuildingDao.getBuildingWithApartmentsWithResidentsWithService(buildingId);
 
         FullBuildingInfoDto result = new FullBuildingInfoDto(
@@ -164,7 +170,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public BuildingResidentsDto getBuildingResidents(long buildingId) {
+    public BuildingResidentsDto getBuildingResidents(long buildingId) throws EntityNotFoundException {
         Building building = BuildingDao.getBuildingWithResidents(buildingId);
 
         List<ResidentInBuildingDto> residents = building.getApartments()
@@ -190,7 +196,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<NewPaymentDto> createPayments(long buildingId) {
+    public List<NewPaymentDto> createPayments(long buildingId) throws EntityNotFoundException {
         FullBuildingInfoDto buildingWithData = getBuildingWithApartmentsInfoWithResidentsInfo(buildingId);
         Building buildingWithService = BuildingDao.getBuildingWithServices(buildingId);
 

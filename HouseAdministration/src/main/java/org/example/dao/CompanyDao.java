@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Company;
 import org.example.entity.Employee;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,13 +12,17 @@ import java.util.List;
 import java.util.Set;
 
 public class CompanyDao {
-    public static Company getCompanyById(long id) {
+    public static Company getCompanyById(long companyId) throws EntityNotFoundException {
         Company company;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            company = session.get(Company.class, id);
+            company = session.get(Company.class, companyId);
             transaction.commit();
+        }
+
+        if (company == null) {
+            throw new EntityNotFoundException(companyId);
         }
 
         return company;
@@ -47,7 +52,7 @@ public class CompanyDao {
         }
     }
 
-    public static Set<Employee> getCompanyEmployees(long id) {
+    public static Set<Employee> getCompanyEmployees(long id) throws EntityNotFoundException {
         Company company;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -64,10 +69,14 @@ public class CompanyDao {
             transaction.commit();
         }
 
+        if (company == null) {
+            throw new EntityNotFoundException(id);
+        }
+
         return company.getEmployees();
     }
 
-    public static Company getCompanyWithEmployeesWithBuildings(long companyId) {
+    public static Company getCompanyWithEmployeesWithBuildings(long companyId) throws EntityNotFoundException {
         Company company;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -83,6 +92,10 @@ public class CompanyDao {
                     .getSingleResult();
 
             transaction.commit();
+        }
+
+        if (company == null) {
+            throw new EntityNotFoundException(companyId);
         }
 
         return company;

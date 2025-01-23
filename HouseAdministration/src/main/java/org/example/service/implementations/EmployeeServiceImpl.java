@@ -10,6 +10,8 @@ import org.example.dto.Payment.NewPaymentDto;
 import org.example.entity.Building;
 import org.example.entity.Company;
 import org.example.entity.Employee;
+import org.example.exception.EntitiesAlreadyRelatedException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.BuildingService;
 import org.example.service.contracts.EmployeeService;
 
@@ -47,13 +49,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteEmployee(long id) throws EntityNotFoundException {
         Employee employee = EmployeeDao.getEmployeeById(id);
         EmployeeDao.deleteEmployee(employee);
     }
 
     @Override
-    public EmployeeDto getEmployeeById(long id) {
+    public EmployeeDto getEmployeeById(long id) throws EntityNotFoundException {
         Employee employee = EmployeeDao.getEmployeeById(id);
 
         EmployeeDto result = new EmployeeDto(
@@ -83,9 +85,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void hireEmployee(long employeeId, long companyId) {
+    public void hireEmployee(long employeeId, long companyId) throws EntityNotFoundException, EntitiesAlreadyRelatedException {
         Employee employee = EmployeeDao.getEmployeeById(employeeId);
         Company company = CompanyDao.getCompanyById(companyId);
+
+        if (employee.getCompany() != null && employee.getCompany().getId() == company.getId()) {
+            throw new EntitiesAlreadyRelatedException(employeeId, companyId);
+        }
 
         UpdateEmployeeDto updatedEmployee = new UpdateEmployeeDto(
                 employee.getId(),
@@ -100,8 +106,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public double getEmployeePayments(long employeeId) {
+    public double getEmployeePayments(long employeeId) throws EntityNotFoundException {
         Employee employee = EmployeeDao.getEmployeeWithBuildings(employeeId);
+
         double total = 0;
 
         for (Building building : employee.getAssignedBuildings()) {

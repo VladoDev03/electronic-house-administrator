@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Payment;
+import org.example.exception.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -17,13 +18,17 @@ public class PaymentDao {
         }
     }
 
-    public static Payment getPaymentById(long id) {
+    public static Payment getPaymentById(long id) throws EntityNotFoundException {
         Payment payment;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             payment = session.get(Payment.class, id);
             transaction.commit();
+        }
+
+        if (payment == null) {
+            throw new EntityNotFoundException(id);
         }
 
         return payment;

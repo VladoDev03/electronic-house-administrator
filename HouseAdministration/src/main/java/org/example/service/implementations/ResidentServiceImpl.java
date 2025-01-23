@@ -1,19 +1,19 @@
 package org.example.service.implementations;
 
-import org.example.dao.ApartmentDao;
 import org.example.dao.ResidentDao;
 import org.example.dto.Resident.CreateResidentDto;
 import org.example.dto.Resident.ResidentDto;
 import org.example.dto.Resident.UpdateResidentDto;
 import org.example.entity.Apartment;
 import org.example.entity.Resident;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.contracts.ResidentService;
 
 import java.util.Set;
 
 public class ResidentServiceImpl implements ResidentService {
     @Override
-    public ResidentDto getResidentById(int id) {
+    public ResidentDto getResidentById(int id) throws EntityNotFoundException {
         Resident resident = ResidentDao.getResidentById(id);
 
         ResidentDto residentDto = new ResidentDto(
@@ -71,13 +71,13 @@ public class ResidentServiceImpl implements ResidentService {
     }
 
     @Override
-    public void deleteResident(long id) {
+    public void deleteResident(long id) throws EntityNotFoundException {
         Resident resident = ResidentDao.getResidentById(id);
         ResidentDao.deleteResident(resident);
     }
 
     @Override
-    public Set<Apartment> getResidentOwnedApartments(long residentId) {
+    public Set<Apartment> getResidentOwnedApartments(long residentId) throws EntityNotFoundException {
         Set<Apartment> result = ResidentDao.getResidentOwnedApartments(residentId);
         return result;
     }

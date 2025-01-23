@@ -61,4 +61,24 @@ public class ApartmentDao {
 
         return apartment;
     }
+
+    public static Apartment getApartmentWithResidents(long apartmentId) {
+        Apartment apartment;
+
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            apartment = session.createQuery(
+                            "select a from Apartment a" +
+                                    " left join fetch a.residents" +
+                                    " where a.id = :apartmentId",
+                            Apartment.class)
+                    .setParameter("apartmentId", apartmentId)
+                    .getSingleResult();
+
+            transaction.commit();
+        }
+
+        return apartment;
+    }
 }

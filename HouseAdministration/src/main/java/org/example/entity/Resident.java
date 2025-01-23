@@ -2,7 +2,6 @@ package org.example.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import java.util.Set;
 
 @Entity
@@ -12,25 +11,25 @@ public class Resident extends Person {
     @ManyToMany(mappedBy = "owners")
     private Set<Apartment> ownedApartments;
 
-    @ManyToOne
-    private Apartment apartment;
+    @ManyToMany(mappedBy = "residents")
+    private Set<Apartment> apartments;
 
     public Resident() {
         super();
     }
 
-    public Resident(String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Apartment apartment) {
+    public Resident(String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Set<Apartment> apartments) {
         super(firstName, lastName, age);
         this.usesElevator = usesElevator;
         this.ownedApartments = ownedApartments;
-        this.apartment = apartment;
+        this.apartments = apartments;
     }
 
-    public Resident(long id, String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Apartment apartment) {
+    public Resident(long id, String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Set<Apartment> apartments) {
         super(id, firstName, lastName, age);
         this.usesElevator = usesElevator;
         this.ownedApartments = ownedApartments;
-        this.apartment = apartment;
+        this.apartments = apartments;
     }
 
     public boolean isUsesElevator() {
@@ -41,7 +40,7 @@ public class Resident extends Person {
         return ownedApartments;
     }
 
-    public Apartment getApartment() {
-        return apartment;
+    public Set<Apartment> getApartments() {
+        return apartments;
     }
 }

@@ -123,4 +123,26 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         updateApartment(apartmentDto);
     }
+
+    @Override
+    public void addResidentToApartment(long apartmentId, long residentId) {
+        Apartment apartment = ApartmentDao.getApartmentWithResidents(apartmentId);
+        Resident resident = ResidentDao.getResidentById(residentId);
+
+        apartment.getResidents().add(resident);
+
+        UpdateApartmentDto apartmentDto = new UpdateApartmentDto(
+                apartment.getId(),
+                apartment.getFloor(),
+                apartment.getApartmentNumber(),
+                apartment.getArea(),
+                apartment.getBuilding(),
+                apartment.getPets(),
+                apartment.getResidents(),
+                apartment.getOwners(),
+                apartment.getPayments()
+        );
+
+        updateApartment(apartmentDto);
+    }
 }

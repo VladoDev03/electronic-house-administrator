@@ -11,4 +11,5 @@ public interface ApartmentService {
     void updateApartment(UpdateApartmentDto apartmentDto);
     void addApartmentToBuilding(long apartmentId, long buildingId);
     void setApartmentOwner(long apartmentId, long ownerId);
+    void addResidentToApartment(long residentId, long apartmentId);
 }

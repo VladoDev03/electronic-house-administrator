@@ -10,15 +10,15 @@ public class CreateResidentDto {
     private final int age;
     private final boolean usesElevator;
     private final Set<Apartment> ownedApartments;
-    private final Apartment apartment;
+    private final Set<Apartment> apartments;
 
-    public CreateResidentDto(String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Apartment apartment) {
+    public CreateResidentDto(String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Set<Apartment> apartments) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.usesElevator = usesElevator;
         this.ownedApartments = ownedApartments;
-        this.apartment = apartment;
+        this.apartments = apartments;
     }
 
     public String getFirstName() {
@@ -41,7 +41,7 @@ public class CreateResidentDto {
         return ownedApartments;
     }
 
-    public Apartment getApartment() {
-        return apartment;
+    public Set<Apartment> getApartment() {
+        return apartments;
     }
 }

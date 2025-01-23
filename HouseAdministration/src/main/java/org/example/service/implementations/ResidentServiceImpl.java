@@ -23,7 +23,7 @@ public class ResidentServiceImpl implements ResidentService {
                 resident.getAge(),
                 resident.isUsesElevator(),
                 resident.getOwnedApartments(),
-                resident.getApartment()
+                resident.getApartments()
         );
 
         return residentDto;
@@ -49,7 +49,7 @@ public class ResidentServiceImpl implements ResidentService {
                 resident.getAge(),
                 resident.isUsesElevator(),
                 resident.getOwnedApartments(),
-                resident.getApartment()
+                resident.getApartments()
         );
 
         return result;
@@ -80,23 +80,5 @@ public class ResidentServiceImpl implements ResidentService {
     public Set<Apartment> getResidentOwnedApartments(long residentId) {
         Set<Apartment> result = ResidentDao.getResidentOwnedApartments(residentId);
         return result;
-    }
-
-    @Override
-    public void addResidentToApartment(long residentId, long apartmentId) {
-        Resident resident = ResidentDao.getResidentById(residentId);
-        Apartment apartment = ApartmentDao.getApartmentById(apartmentId);
-
-        UpdateResidentDto residentDto = new UpdateResidentDto(
-                resident.getId(),
-                resident.getFirstName(),
-                resident.getLastName(),
-                resident.getAge(),
-                resident.isUsesElevator(),
-                resident.getOwnedApartments(),
-                apartment
-        );
-
-        updateResident(residentDto);
     }
 }

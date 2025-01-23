@@ -23,9 +23,6 @@ public class Apartment extends BaseEntity {
     private Set<Pet> pets;
 
     @OneToMany(mappedBy = "apartment")
-    private Set<Resident> residents;
-
-    @OneToMany(mappedBy = "apartment")
     private Set<Payment> payments;
 
     @ManyToMany
@@ -35,6 +32,14 @@ public class Apartment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "resident_id")
     )
     private Set<Resident> owners;
+
+    @ManyToMany
+    @JoinTable(
+            name = "apartment_residents",
+            joinColumns = @JoinColumn(name = "apartment_id"),
+            inverseJoinColumns = @JoinColumn(name = "resident_id")
+    )
+    private Set<Resident> residents;
 
     public Apartment() {
     }

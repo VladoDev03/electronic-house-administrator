@@ -13,5 +13,4 @@ public interface ResidentService {
     void updateResident(UpdateResidentDto residentDto);
     void deleteResident(long id);
     Set<Apartment> getResidentOwnedApartments(long residentId);
-    void addResidentToApartment(long residentId, long apartmentId);
 }

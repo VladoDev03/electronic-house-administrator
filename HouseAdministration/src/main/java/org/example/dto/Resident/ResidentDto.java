@@ -11,16 +11,16 @@ public class ResidentDto {
     private final int age;
     private final boolean usesElevator;
     private final Set<Apartment> ownedApartments;
-    private final Apartment apartment;
+    private final Set<Apartment> apartments;
 
-    public ResidentDto(long id, String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Apartment apartment) {
+    public ResidentDto(long id, String firstName, String lastName, int age, boolean usesElevator, Set<Apartment> ownedApartments, Set<Apartment> apartments) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.usesElevator = usesElevator;
         this.ownedApartments = ownedApartments;
-        this.apartment = apartment;
+        this.apartments = apartments;
     }
 
     public long getId() {
@@ -47,7 +47,7 @@ public class ResidentDto {
         return ownedApartments;
     }
 
-    public Apartment getApartment() {
-        return apartment;
+    public Set<Apartment> getApartment() {
+        return apartments;
     }
 }

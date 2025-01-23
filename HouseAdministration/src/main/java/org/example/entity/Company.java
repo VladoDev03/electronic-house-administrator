@@ -16,6 +16,7 @@ public class Company extends BaseEntity {
     @NotBlank(message = "Company name cannot be blank!")
     @Size(max = 20, message = "Company name has to be with up to 20 characters!")
     @InvalidNames(message = "Company and Firm are not valid names!")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @PastOrPresent(message = "Foundation date cannot be in the future!")

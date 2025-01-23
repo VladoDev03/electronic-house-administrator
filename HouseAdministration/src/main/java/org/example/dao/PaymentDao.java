@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Payment;
 import org.hibernate.Session;
@@ -8,10 +9,10 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class PaymentDao {
-    public static void createPayment(Payment payment) {
+    public static void createPayment(@Valid Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(payment);
+            session.persist(payment);
             transaction.commit();
         }
     }
@@ -28,18 +29,18 @@ public class PaymentDao {
         return payment;
     }
 
-    public static void updatePayment(Payment payment) {
+    public static void updatePayment(@Valid Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(payment);
+            session.merge(payment);
             transaction.commit();
         }
     }
 
-    public static void deletePayment(Payment payment) {
+    public static void deletePayment(@Valid Payment payment) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(payment);
+            session.remove(payment);
             transaction.commit();
         }
     }
@@ -49,7 +50,7 @@ public class PaymentDao {
             Transaction transaction = session.beginTransaction();
             
             for (Payment payment : payments) {
-                session.save(payment);
+                session.persist(payment);
             }
 
             transaction.commit();

@@ -17,6 +17,7 @@ dependencies {
 //    Validation
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+    implementation("org.glassfish.expressly:expressly:5.0.0")
 
 //    Logging
     implementation("org.apache.logging.log4j:log4j-core:2.17.1")

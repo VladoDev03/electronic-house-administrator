@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Apartment;
 import org.example.entity.Resident;
@@ -21,26 +22,26 @@ public class ResidentDao {
         return resident;
     }
 
-    public static void createResident(Resident resident) {
+    public static void createResident(@Valid Resident resident) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(resident);
+            session.persist(resident);
             transaction.commit();
         }
     }
 
-    public static void updateResident(Resident resident) {
+    public static void updateResident(@Valid Resident resident) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(resident);
+            session.merge(resident);
             transaction.commit();
         }
     }
 
-    public static void deleteResident(Resident resident) {
+    public static void deleteResident(@Valid Resident resident) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(resident);
+            session.remove(resident);
             transaction.commit();
         }
     }

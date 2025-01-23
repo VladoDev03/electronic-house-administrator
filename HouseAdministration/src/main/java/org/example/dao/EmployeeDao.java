@@ -1,7 +1,7 @@
 package org.example.dao;
 
+import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.Building;
 import org.example.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,35 +19,26 @@ public class EmployeeDao {
         return employee;
     }
 
-    public static void createEmployee(Employee employee) {
+    public static void createEmployee(@Valid Employee employee) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(employee);
+            session.persist(employee);
             transaction.commit();
         }
     }
 
-    public static void updateEmployee(Employee employee) {
+    public static void updateEmployee(@Valid Employee employee) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(employee);
+            session.merge(employee);
             transaction.commit();
         }
     }
 
-    public static void deleteEmployee(Employee employee) {
+    public static void deleteEmployee(@Valid Employee employee) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(employee);
-            transaction.commit();
-        }
-    }
-
-    public static void assignBuilding(Employee employee, Building building) {
-        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            employee.getAssignedBuildings().add(building);
-            session.saveOrUpdate(employee);
+            session.remove(employee);
             transaction.commit();
         }
     }

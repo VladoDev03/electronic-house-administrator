@@ -101,7 +101,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public FullBuildingInfoDto getBuildingWithApartmentsInfoWithResidentsInfo(long buildingId) {
-        Building building = BuildingDao.getBuildingWithApartmentsWithResidentsWithSerivce(buildingId);
+        Building building = BuildingDao.getBuildingWithApartmentsWithResidentsWithService(buildingId);
 
         FullBuildingInfoDto result = new FullBuildingInfoDto(
                 building.getId(),

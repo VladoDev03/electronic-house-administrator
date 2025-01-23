@@ -27,7 +27,7 @@ public class Apartment extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "apartment_owners",
+            name = "apartment_owner",
             joinColumns = @JoinColumn(name = "apartment_id"),
             inverseJoinColumns = @JoinColumn(name = "resident_id")
     )
@@ -35,7 +35,7 @@ public class Apartment extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "apartment_residents",
+            name = "apartment_resident",
             joinColumns = @JoinColumn(name = "apartment_id"),
             inverseJoinColumns = @JoinColumn(name = "resident_id")
     )

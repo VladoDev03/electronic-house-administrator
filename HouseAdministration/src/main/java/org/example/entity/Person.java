@@ -1,19 +1,21 @@
 package org.example.entity;
 
-//import jakarta.validation.constraints.Positive;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @MappedSuperclass
 public class Person extends BaseEntity {
+    @NotBlank(message = "First name cannot be blank!")
     @Column(name="first_name")
     private String firstName;
 
+    @NotBlank(message = "Last name cannot be blank!")
     @Column(name="last_name")
     private String lastName;
 
-//    @Positive
+    @Positive
     private int age;
 
     public Person() {

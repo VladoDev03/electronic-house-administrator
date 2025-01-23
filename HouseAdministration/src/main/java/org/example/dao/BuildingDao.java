@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Building;
 import org.hibernate.Session;
@@ -18,31 +19,31 @@ public class BuildingDao {
         return building;
     }
 
-    public static void createBuilding(Building building) {
+    public static void createBuilding(@Valid Building building) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(building);
+            session.persist(building);
             transaction.commit();
         }
     }
 
-    public static void deleteBuilding(Building building) {
+    public static void deleteBuilding(@Valid Building building) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(building);
+            session.remove(building);
             transaction.commit();
         }
     }
 
-    public static void updateBuilding(Building building) {
+    public static void updateBuilding(@Valid Building building) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(building);
+            session.merge(building);
             transaction.commit();
         }
     }
 
-    public static Building getBuildingWithApartmentsWithResidentsWithSerivce(long buildingId) {
+    public static Building getBuildingWithApartmentsWithResidentsWithService(long buildingId) {
         Building building;
 
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {

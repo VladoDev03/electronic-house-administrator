@@ -1,12 +1,13 @@
 package org.example.dao;
 
+import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Pet;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class PetDao {
-    public static void createPet(Pet pet) {
+    public static void createPet(@Valid Pet pet) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.persist(pet);
@@ -26,7 +27,7 @@ public class PetDao {
         return pet;
     }
 
-    public static void updatePet(Pet pet) {
+    public static void updatePet(@Valid Pet pet) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.merge(pet);
@@ -34,7 +35,7 @@ public class PetDao {
         }
     }
 
-    public static void deletePet(Pet pet) {
+    public static void deletePet(@Valid Pet pet) {
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.remove(pet);

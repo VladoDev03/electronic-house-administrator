@@ -4,14 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public class Person extends BaseEntity {
     @NotBlank(message = "First name cannot be blank!")
+    @Size(max = 20, message = "First name has to be with up to 20 characters!")
     @Column(name="first_name")
     private String firstName;
 
     @NotBlank(message = "Last name cannot be blank!")
+    @Size(max = 20, message = "Last name has to be with up to 20 characters!")
     @Column(name="last_name")
     private String lastName;
 

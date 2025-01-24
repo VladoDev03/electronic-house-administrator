@@ -1,12 +1,17 @@
 package org.example.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.util.Set;
 
 @Entity
 public class Building extends BaseEntity {
+    @NotBlank(message = "Building address cannot be blank!")
+    @Size(max = 20, message = "Building address has to be with up to 20 characters!")
     private String address;
 
     @Positive

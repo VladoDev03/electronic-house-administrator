@@ -25,7 +25,7 @@ import org.example.service.implementations.*;
 import java.util.HashSet;
 
 public class Main {
-    public static void main(String[] args) throws EntityNotFoundException {
+    public static void main(String[] args) {
         SessionFactoryUtil.getSessionFactory().openSession();
 
         StringBuilder sb = new StringBuilder();
@@ -40,86 +40,285 @@ public class Main {
         ResidentService residentService = new ResidentServiceImpl();
         PetService petService = new PetServiceImpl();
 
+        EmployeeDto employeeDto1 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
+        CompanyDto companyDto1 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
+        BuildingDto buildingDto1 = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower", 10, 100, new HashSet<>(), null, null));
+        ApartmentDto apartmentDto1 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
+        ServiceDto serviceDto1 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, 54, null));
+        PaymentDto paymentDto1 = paymentService.createPayment(new CreatePaymentDto(1500, null));
+        PaymentDto paymentDto3 = paymentService.createPayment(new CreatePaymentDto(1700, null));
+        PetDto petDto1 = petService.createPet(new CreatePetDto(true, null));
+        PetDto petDto2 = petService.createPet(new CreatePetDto(false, null));
+        ResidentDto residentDto1 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
+        ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 48, true, new HashSet<>(), null));
+        ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));
+
         try {
-            EmployeeDto employeeDto1 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 22, new HashSet<>(), null));
-            CompanyDto companyDto1 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
-            BuildingDto buildingDto1 = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower", 10, 100, new HashSet<>(), null, null));
-            ApartmentDto apartmentDto1 = apartmentService.createApartment(new CreateApartmentDto(7, 18, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
-            ServiceDto serviceDto1 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, 54, null));
-            PaymentDto paymentDto1 = paymentService.createPayment(new CreatePaymentDto(1500, null));
-            PaymentDto paymentDto3 = paymentService.createPayment(new CreatePaymentDto(1700, null));
-            PetDto petDto1 = petService.createPet(new CreatePetDto(true, null));
-            PetDto petDto2 = petService.createPet(new CreatePetDto(false, null));
-            ResidentDto residentDto1 = residentService.createResident(new CreateResidentDto("John", "Doe", 54, false, new HashSet<>(), null));
-            ResidentDto residentDto2 = residentService.createResident(new CreateResidentDto("Alice", "Johnson", 48, true, new HashSet<>(), null));
-            ResidentDto residentDto3 = residentService.createResident(new CreateResidentDto("Jane", "Smith", 21, true, new HashSet<>(), null));
-
             buildingService.assignBuildingToEmployee(employeeDto1.getId(), buildingDto1.getId());
-            employeeService.hireEmployee(employeeDto1.getId(), companyDto1.getId());
-            apartmentService.addApartmentToBuilding(apartmentDto1.getId(), buildingDto1.getId());
-            serviceService.setServiceToBuilding(serviceDto1.getId(), buildingDto1.getId());
-            paymentService.addPaymentToApartment(apartmentDto1.getId(), paymentDto1.getId());
-            paymentService.addPaymentToApartment(apartmentDto1.getId(), paymentDto3.getId());
-
-            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto1.getId());
-            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto2.getId());
-            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto3.getId());
-
-            apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto1.getId());
-            apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto2.getId());
-
-            EmployeeDto employeeDto2 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 54, new HashSet<>(), null));
-            EmployeeDto employeeDto3 = employeeService.createEmployee(new CreateEmployeeDto("Alice", "Johnson", 48, new HashSet<>(), null));
-            CompanyDto companyDto2 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
-            BuildingDto buildingDto2 = buildingService.createBuilding(new CreateBuildingDto("What else", 10, 100, new HashSet<>(), null, null));
-            BuildingDto buildingDto3 = buildingService.createBuilding(new CreateBuildingDto("Moon hut", 10, 100, new HashSet<>(), null, null));
-            BuildingDto buildingDto4 = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower Twice", 10, 100, new HashSet<>(), null, null));
-            ApartmentDto apartmentDto2 = apartmentService.createApartment(new CreateApartmentDto(7, 19, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
-            ServiceDto serviceDto2 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, 78, null));
-            PaymentDto paymentDto2 = paymentService.createPayment(new CreatePaymentDto(1200, null));
-            ResidentDto residentDto4 = residentService.createResident(new CreateResidentDto("Charlie", "Brown", 54, false, new HashSet<>(), null));
-            ResidentDto residentDto5 = residentService.createResident(new CreateResidentDto("Dave", "Williams", 48, true, new HashSet<>(), null));
-            ResidentDto residentDto6 = residentService.createResident(new CreateResidentDto("Eve", "Davis", 21, true, new HashSet<>(), null));
-
-            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto2.getId());
-            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto3.getId());
-            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto4.getId());
-
-            employeeService.hireEmployee(employeeDto2.getId(), companyDto2.getId());
-            employeeService.hireEmployee(employeeDto3.getId(), companyDto2.getId());
-            apartmentService.addApartmentToBuilding(apartmentDto2.getId(), buildingDto2.getId());
-            serviceService.setServiceToBuilding(serviceDto2.getId(), buildingDto2.getId());
-            paymentService.addPaymentToApartment(apartmentDto2.getId(), paymentDto2.getId());
-
-            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto3.getId());
-            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto4.getId());
-            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto5.getId());
-            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto6.getId());
-
-            apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto4.getId());
-            apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto5.getId());
-
-            ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 17, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
-            ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 63, true, new HashSet<>(), null));
-            ResidentDto residentDto8 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
-            apartmentService.addApartmentToBuilding(apartmentDto3.getId(), buildingDto1.getId());
-            apartmentService.addResidentToApartment(apartmentDto3.getId(), residentDto7.getId());
-            apartmentService.addResidentToApartment(apartmentDto3.getId(), residentDto8.getId());
-
-            paymentService.addMultiplePaymentsToBuilding(buildingDto1.getId());
-
-            sb.append(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()));
-            sb.append(buildingService.getBuildingResidents(buildingDto1.getId()));
-            petService.addPetToApartment(apartmentDto1.getId(), petDto1.getId());
-            petService.addPetToApartment(apartmentDto1.getId(), petDto2.getId());
-            sb.append(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
-            sb.append(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto2.getId()));
-            companyService.getCompaniesWithIncome().forEach(x -> sb.append(x.toString()));
-            sb.append(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
-            buildingService.createPayments(buildingDto1.getId()).forEach(x -> sb.append(x.toString()));
-            sb.append(employeeService.getEmployeePayments(employeeDto1.getId()));
         } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
-            sb.append(e.getMessage());
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            employeeService.hireEmployee(employeeDto1.getId(), companyDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addApartmentToBuilding(apartmentDto1.getId(), buildingDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            serviceService.setServiceToBuilding(serviceDto1.getId(), buildingDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            paymentService.addPaymentToApartment(apartmentDto1.getId(), paymentDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            paymentService.addPaymentToApartment(apartmentDto1.getId(), paymentDto3.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto1.getId(), residentDto3.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.setApartmentOwner(apartmentDto1.getId(), residentDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        EmployeeDto employeeDto2 = employeeService.createEmployee(new CreateEmployeeDto("John", "Doe", 54, new HashSet<>(), null));
+        EmployeeDto employeeDto3 = employeeService.createEmployee(new CreateEmployeeDto("Alice", "Johnson", 48, new HashSet<>(), null));
+        CompanyDto companyDto2 = companyService.createCompany(new CreateCompanyDto("House Administrator", new HashSet<>()));
+        BuildingDto buildingDto2 = buildingService.createBuilding(new CreateBuildingDto("What else", 10, 100, new HashSet<>(), null, null));
+        BuildingDto buildingDto3 = buildingService.createBuilding(new CreateBuildingDto("Moon hut", 10, 100, new HashSet<>(), null, null));
+        BuildingDto buildingDto4 = buildingService.createBuilding(new CreateBuildingDto("Sunset Tower Twice", 10, 100, new HashSet<>(), null, null));
+        ApartmentDto apartmentDto2 = apartmentService.createApartment(new CreateApartmentDto(7, 19, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
+        ServiceDto serviceDto2 = serviceService.createService(new CreateServiceDto(100, 15, 35, 42, 78, null));
+        PaymentDto paymentDto2 = paymentService.createPayment(new CreatePaymentDto(1200, null));
+        ResidentDto residentDto4 = residentService.createResident(new CreateResidentDto("Charlie", "Brown", 54, false, new HashSet<>(), null));
+        ResidentDto residentDto5 = residentService.createResident(new CreateResidentDto("Dave", "Williams", 48, true, new HashSet<>(), null));
+        ResidentDto residentDto6 = residentService.createResident(new CreateResidentDto("Eve", "Davis", 21, true, new HashSet<>(), null));
+
+        try {
+            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto3.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            buildingService.assignBuildingToEmployee(employeeDto2.getId(), buildingDto4.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            employeeService.hireEmployee(employeeDto2.getId(), companyDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            employeeService.hireEmployee(employeeDto3.getId(), companyDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addApartmentToBuilding(apartmentDto2.getId(), buildingDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            serviceService.setServiceToBuilding(serviceDto2.getId(), buildingDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            paymentService.addPaymentToApartment(apartmentDto2.getId(), paymentDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto3.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto4.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto5.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto2.getId(), residentDto6.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto4.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.setApartmentOwner(apartmentDto2.getId(), residentDto5.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        ApartmentDto apartmentDto3 = apartmentService.createApartment(new CreateApartmentDto(7, 17, 10, null, new HashSet<>(), new HashSet<>(), new HashSet<>(), null));
+        ResidentDto residentDto7 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 63, true, new HashSet<>(), null));
+        ResidentDto residentDto8 = residentService.createResident(new CreateResidentDto("Bob", "Brown", 30, true, new HashSet<>(), null));
+
+        try {
+            apartmentService.addApartmentToBuilding(apartmentDto3.getId(), buildingDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto3.getId(), residentDto7.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            apartmentService.addResidentToApartment(apartmentDto3.getId(), residentDto8.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            paymentService.addMultiplePaymentsToBuilding(buildingDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(companyService.getCompanyEmployeesWithBuildingCount(companyDto2.getId()));
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(buildingService.getBuildingResidents(buildingDto1.getId()));
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            petService.addPetToApartment(apartmentDto1.getId(), petDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            petService.addPetToApartment(apartmentDto1.getId(), petDto2.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto1.getId()));
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(buildingService.getBuildingWithApartmentsInfoWithResidentsInfo(buildingDto2.getId()));
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        companyService.getCompaniesWithIncome().forEach(x -> sb.append(x.toString()));
+        try {
+            sb.append(companyService.getCompanyEmployeesWithBuildingsInfo(companyDto2.getId()));
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            buildingService.createPayments(buildingDto1.getId()).forEach(x -> sb.append(x.toString()));
+            sb.append("\n");
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(employeeService.getEmployeePayments(employeeDto1.getId())).append("\n\n");
+        } catch (EntityNotFoundException e) {
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            sb.append(employeeService.getEmployeePayments(1000)).append("\n\n");
+        } catch (EntityNotFoundException e) {
+            sb.append("=======================\n");
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            buildingService.assignBuildingToEmployee(employeeDto1.getId(), buildingDto1.getId());
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append("=======================\n");
+            sb.append(e.getMessage()).append("\n");
+        }
+
+        try {
+            buildingService.assignBuildingToEmployee(100, 100);
+        } catch (EntitiesAlreadyRelatedException | EntityNotFoundException e) {
+            sb.append("=======================\n");
+            sb.append(e.getMessage()).append("\n");
         }
 
         System.out.println(sb.toString());

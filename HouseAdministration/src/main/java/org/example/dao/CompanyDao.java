@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Company;
@@ -67,9 +68,7 @@ public class CompanyDao {
                     .getSingleResult();
 
             transaction.commit();
-        }
-
-        if (company == null) {
+        } catch (NoResultException e) {
             throw new EntityNotFoundException(id);
         }
 
@@ -92,9 +91,7 @@ public class CompanyDao {
                     .getSingleResult();
 
             transaction.commit();
-        }
-
-        if (company == null) {
+        } catch (NoResultException e) {
             throw new EntityNotFoundException(companyId);
         }
 

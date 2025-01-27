@@ -75,4 +75,12 @@ public class Building extends BaseEntity {
     public Service getService() {
         return service;
     }
+
+    public void setApartments(Set<Apartment> apartments) {
+        this.apartments = apartments;
+    }
+
+    public void setResponsibleEmployee(Employee responsibleEmployee) {
+        this.responsibleEmployee = responsibleEmployee;
+    }
 }

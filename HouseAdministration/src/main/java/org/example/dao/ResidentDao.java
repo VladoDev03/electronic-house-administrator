@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Apartment;
@@ -66,9 +67,7 @@ public class ResidentDao {
                     .getSingleResult();
 
             transaction.commit();
-        }
-
-        if (resident == null) {
+        } catch (NoResultException e) {
             throw new EntityNotFoundException(residentId);
         }
 
